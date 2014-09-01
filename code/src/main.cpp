@@ -224,7 +224,7 @@ void ApplyGlobalSettings()
 
 	// with memory management
 	g_app.g_memNumColorTiles	    = 3000;	 // preallocated buffer elements
-	g_app.g_memNumDisplacementTiles = 2000;//2000;	 // preallocated buffer elements
+	g_app.g_memNumDisplacementTiles = 3000;//2000;	 // preallocated buffer elements
 
 	g_app.g_memMaxNumTilesPerObject = 85000;
 
@@ -344,20 +344,23 @@ void StoreCamera(std::string cameraFilename = std::string("camera.cam")) {
 void LoadCamera(std::string cameraFilename = std::string("camera.cam")) {
 	std::ifstream infile(cameraFilename.c_str(), std::ios::in | std::ios::binary);
 
-	XMFLOAT3 eye;
-	XMFLOAT3 lookat;
-	XMFLOAT4 q;
+	if (infile.is_open())
+	{
+		XMFLOAT3 eye;
+		XMFLOAT3 lookat;
+		XMFLOAT4 q;
 
-	infile.read(reinterpret_cast<char*>(&eye), sizeof(XMFLOAT3));
-	infile.read(reinterpret_cast<char*>(&lookat), sizeof(XMFLOAT3));
-	infile.read(reinterpret_cast<char*>(&q), sizeof(XMFLOAT4));
-	infile.read(reinterpret_cast<char*>(&g_LightDir), sizeof(XMFLOAT3));
+		infile.read(reinterpret_cast<char*>(&eye), sizeof(XMFLOAT3));
+		infile.read(reinterpret_cast<char*>(&lookat), sizeof(XMFLOAT3));
+		infile.read(reinterpret_cast<char*>(&q), sizeof(XMFLOAT4));
+		infile.read(reinterpret_cast<char*>(&g_LightDir), sizeof(XMFLOAT3));
 
-	g_Camera.SetViewParams(&eye, &lookat);
-	XMVECTOR qV = XMLoadFloat4(&q);
-	g_Camera.SetViewQuat(qV);
+		g_Camera.SetViewParams(&eye, &lookat);
+		XMVECTOR qV = XMLoadFloat4(&q);
+		g_Camera.SetViewQuat(qV);
 
-	infile.close();
+		infile.close();
+	}
 }
 
 void StoreChar(std::string cameraFilename = std::string("character.char")) {
