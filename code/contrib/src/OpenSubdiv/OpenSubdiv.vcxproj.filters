@@ -1,0 +1,255 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\far">
+      <UniqueIdentifier>{1137c436-2a29-4f86-9bba-587d7a49cfd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\hbr">
+      <UniqueIdentifier>{4a12992e-9fb2-4a28-acf5-7ea2ebb5d5f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\osd">
+      <UniqueIdentifier>{a8a8d10f-73d7-4c09-a661-b0caf2eac683}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\osd">
+      <UniqueIdentifier>{f3c1a71c-77c9-461f-83f4-ab3f46191775}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="NOTICE.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="far\bilinearSubdivisionTables.h">
+      <Filter>Header Files\far</Filter>
+    </ClInclude>
+    <ClInclude Include="far\bilinearSubdivisionTablesFactory.h">
+      <Filter>Header Files\far</Filter>
+    </ClInclude>
+    <ClInclude Include="far\catmarkSubdivisionTables.h">
+      <Filter>Header Files\far</Filter>
+    </ClInclude>
+    <ClInclude Include="far\catmarkSubdivisionTablesFactory.h">
+      <Filter>Header Files\far</Filter>
+    </ClInclude>
+    <ClInclude Include="far\dispatcher.h">
+      <Filter>Header Files\far</Filter>
+    </ClInclude>
+    <ClInclude Include="far\kernelBatch.h">
+      <Filter>Header Files\far</Filter>
+    </ClInclude>
+    <ClInclude Include="far\kernelBatchFactory.h">
+      <Filter>Header Files\far</Filter>
+    </ClInclude>
+    <ClInclude Include="far\loopSubdivisionTables.h">
+      <Filter>Header Files\far</Filter>
+    </ClInclude>
+    <ClInclude Include="far\loopSubdivisionTablesFactory.h">
+      <Filter>Header Files\far</Filter>
+    </ClInclude>
+    <ClInclude Include="far\mesh.h">
+      <Filter>Header Files\far</Filter>
+    </ClInclude>
+    <ClInclude Include="far\meshFactory.h">
+      <Filter>Header Files\far</Filter>
+    </ClInclude>
+    <ClInclude Include="far\multiMeshFactory.h">
+      <Filter>Header Files\far</Filter>
+    </ClInclude>
+    <ClInclude Include="far\patchMap.h">
+      <Filter>Header Files\far</Filter>
+    </ClInclude>
+    <ClInclude Include="far\patchParam.h">
+      <Filter>Header Files\far</Filter>
+    </ClInclude>
+    <ClInclude Include="far\patchTables.h">
+      <Filter>Header Files\far</Filter>
+    </ClInclude>
+    <ClInclude Include="far\patchTablesFactory.h">
+      <Filter>Header Files\far</Filter>
+    </ClInclude>
+    <ClInclude Include="far\stencilTables.h">
+      <Filter>Header Files\far</Filter>
+    </ClInclude>
+    <ClInclude Include="far\stencilTablesFactory.h">
+      <Filter>Header Files\far</Filter>
+    </ClInclude>
+    <ClInclude Include="far\subdivisionTables.h">
+      <Filter>Header Files\far</Filter>
+    </ClInclude>
+    <ClInclude Include="far\subdivisionTablesFactory.h">
+      <Filter>Header Files\far</Filter>
+    </ClInclude>
+    <ClInclude Include="far\vertexEditTables.h">
+      <Filter>Header Files\far</Filter>
+    </ClInclude>
+    <ClInclude Include="far\vertexEditTablesFactory.h">
+      <Filter>Header Files\far</Filter>
+    </ClInclude>
+    <ClInclude Include="version.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hbr\allocator.h">
+      <Filter>Header Files\hbr</Filter>
+    </ClInclude>
+    <ClInclude Include="hbr\bilinear.h">
+      <Filter>Header Files\hbr</Filter>
+    </ClInclude>
+    <ClInclude Include="hbr\catmark.h">
+      <Filter>Header Files\hbr</Filter>
+    </ClInclude>
+    <ClInclude Include="hbr\cornerEdit.h">
+      <Filter>Header Files\hbr</Filter>
+    </ClInclude>
+    <ClInclude Include="hbr\creaseEdit.h">
+      <Filter>Header Files\hbr</Filter>
+    </ClInclude>
+    <ClInclude Include="hbr\face.h">
+      <Filter>Header Files\hbr</Filter>
+    </ClInclude>
+    <ClInclude Include="hbr\faceEdit.h">
+      <Filter>Header Files\hbr</Filter>
+    </ClInclude>
+    <ClInclude Include="hbr\fvarData.h">
+      <Filter>Header Files\hbr</Filter>
+    </ClInclude>
+    <ClInclude Include="hbr\fvarEdit.h">
+      <Filter>Header Files\hbr</Filter>
+    </ClInclude>
+    <ClInclude Include="hbr\halfedge.h">
+      <Filter>Header Files\hbr</Filter>
+    </ClInclude>
+    <ClInclude Include="hbr\hierarchicalEdit.h">
+      <Filter>Header Files\hbr</Filter>
+    </ClInclude>
+    <ClInclude Include="hbr\holeEdit.h">
+      <Filter>Header Files\hbr</Filter>
+    </ClInclude>
+    <ClInclude Include="hbr\loop.h">
+      <Filter>Header Files\hbr</Filter>
+    </ClInclude>
+    <ClInclude Include="hbr\mesh.h">
+      <Filter>Header Files\hbr</Filter>
+    </ClInclude>
+    <ClInclude Include="hbr\subdivision.h">
+      <Filter>Header Files\hbr</Filter>
+    </ClInclude>
+    <ClInclude Include="hbr\vertex.h">
+      <Filter>Header Files\hbr</Filter>
+    </ClInclude>
+    <ClInclude Include="hbr\vertexEdit.h">
+      <Filter>Header Files\hbr</Filter>
+    </ClInclude>
+    <ClInclude Include="osd\computeController.h">
+      <Filter>Header Files\osd</Filter>
+    </ClInclude>
+    <ClInclude Include="osd\d3d11ComputeContext.h">
+      <Filter>Header Files\osd</Filter>
+    </ClInclude>
+    <ClInclude Include="osd\d3d11ComputeController.h">
+      <Filter>Header Files\osd</Filter>
+    </ClInclude>
+    <ClInclude Include="osd\d3d11DrawContext.h">
+      <Filter>Header Files\osd</Filter>
+    </ClInclude>
+    <ClInclude Include="osd\d3d11DrawRegistry.h">
+      <Filter>Header Files\osd</Filter>
+    </ClInclude>
+    <ClInclude Include="osd\d3d11KernelBundle.h">
+      <Filter>Header Files\osd</Filter>
+    </ClInclude>
+    <ClInclude Include="osd\d3d11Mesh.h">
+      <Filter>Header Files\osd</Filter>
+    </ClInclude>
+    <ClInclude Include="osd\d3d11PtexMipmapTexture.h">
+      <Filter>Header Files\osd</Filter>
+    </ClInclude>
+    <ClInclude Include="osd\d3d11PtexTexture.h">
+      <Filter>Header Files\osd</Filter>
+    </ClInclude>
+    <ClInclude Include="osd\d3d11VertexBuffer.h">
+      <Filter>Header Files\osd</Filter>
+    </ClInclude>
+    <ClInclude Include="osd\debug.h">
+      <Filter>Header Files\osd</Filter>
+    </ClInclude>
+    <ClInclude Include="osd\drawContext.h">
+      <Filter>Header Files\osd</Filter>
+    </ClInclude>
+    <ClInclude Include="osd\drawRegistry.h">
+      <Filter>Header Files\osd</Filter>
+    </ClInclude>
+    <ClInclude Include="osd\error.h">
+      <Filter>Header Files\osd</Filter>
+    </ClInclude>
+    <ClInclude Include="osd\evalLimitContext.h">
+      <Filter>Header Files\osd</Filter>
+    </ClInclude>
+    <ClInclude Include="osd\mesh.h">
+      <Filter>Header Files\osd</Filter>
+    </ClInclude>
+    <ClInclude Include="osd\nonCopyable.h">
+      <Filter>Header Files\osd</Filter>
+    </ClInclude>
+    <ClInclude Include="osd\opengl.h">
+      <Filter>Header Files\osd</Filter>
+    </ClInclude>
+    <ClInclude Include="osd\ptexMipmapTextureLoader.h">
+      <Filter>Header Files\osd</Filter>
+    </ClInclude>
+    <ClInclude Include="osd\ptexTextureLoader.h">
+      <Filter>Header Files\osd</Filter>
+    </ClInclude>
+    <ClInclude Include="osd\vertex.h">
+      <Filter>Header Files\osd</Filter>
+    </ClInclude>
+    <ClInclude Include="osd\vertexDescriptor.h">
+      <Filter>Header Files\osd</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DXConfig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="osd\d3d11ComputeContext.cpp">
+      <Filter>Source Files\osd</Filter>
+    </ClCompile>
+    <ClCompile Include="osd\d3d11ComputeController.cpp">
+      <Filter>Source Files\osd</Filter>
+    </ClCompile>
+    <ClCompile Include="osd\d3d11DrawContext.cpp">
+      <Filter>Source Files\osd</Filter>
+    </ClCompile>
+    <ClCompile Include="osd\d3d11DrawRegistry.cpp">
+      <Filter>Source Files\osd</Filter>
+    </ClCompile>
+    <ClCompile Include="osd\d3d11KernelBundle.cpp">
+      <Filter>Source Files\osd</Filter>
+    </ClCompile>
+    <ClCompile Include="osd\d3d11VertexBuffer.cpp">
+      <Filter>Source Files\osd</Filter>
+    </ClCompile>
+    <ClCompile Include="osd\drawContext.cpp">
+      <Filter>Source Files\osd</Filter>
+    </ClCompile>
+    <ClCompile Include="osd\drawRegistry.cpp">
+      <Filter>Source Files\osd</Filter>
+    </ClCompile>
+    <ClCompile Include="osd\evalLimitContext.cpp">
+      <Filter>Source Files\osd</Filter>
+    </ClCompile>
+    <ClCompile Include="osd\error.cpp">
+      <Filter>Source Files\osd</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

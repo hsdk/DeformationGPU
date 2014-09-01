@@ -1,0 +1,4 @@
+bullet 2.81
+assimp 3.0.1270
+DXUT 
+DirectX

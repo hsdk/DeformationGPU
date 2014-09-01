@@ -1,0 +1,226 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="NOTICE.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\DXConfig.h" />
+    <ClInclude Include="far\bilinearSubdivisionTables.h" />
+    <ClInclude Include="far\bilinearSubdivisionTablesFactory.h" />
+    <ClInclude Include="far\catmarkSubdivisionTables.h" />
+    <ClInclude Include="far\catmarkSubdivisionTablesFactory.h" />
+    <ClInclude Include="far\dispatcher.h" />
+    <ClInclude Include="far\kernelBatch.h" />
+    <ClInclude Include="far\kernelBatchFactory.h" />
+    <ClInclude Include="far\loopSubdivisionTables.h" />
+    <ClInclude Include="far\loopSubdivisionTablesFactory.h" />
+    <ClInclude Include="far\mesh.h" />
+    <ClInclude Include="far\meshFactory.h" />
+    <ClInclude Include="far\multiMeshFactory.h" />
+    <ClInclude Include="far\patchMap.h" />
+    <ClInclude Include="far\patchParam.h" />
+    <ClInclude Include="far\patchTables.h" />
+    <ClInclude Include="far\patchTablesFactory.h" />
+    <ClInclude Include="far\stencilTables.h" />
+    <ClInclude Include="far\stencilTablesFactory.h" />
+    <ClInclude Include="far\subdivisionTables.h" />
+    <ClInclude Include="far\subdivisionTablesFactory.h" />
+    <ClInclude Include="far\vertexEditTables.h" />
+    <ClInclude Include="far\vertexEditTablesFactory.h" />
+    <ClInclude Include="hbr\allocator.h" />
+    <ClInclude Include="hbr\bilinear.h" />
+    <ClInclude Include="hbr\catmark.h" />
+    <ClInclude Include="hbr\cornerEdit.h" />
+    <ClInclude Include="hbr\creaseEdit.h" />
+    <ClInclude Include="hbr\face.h" />
+    <ClInclude Include="hbr\faceEdit.h" />
+    <ClInclude Include="hbr\fvarData.h" />
+    <ClInclude Include="hbr\fvarEdit.h" />
+    <ClInclude Include="hbr\halfedge.h" />
+    <ClInclude Include="hbr\hierarchicalEdit.h" />
+    <ClInclude Include="hbr\holeEdit.h" />
+    <ClInclude Include="hbr\loop.h" />
+    <ClInclude Include="hbr\mesh.h" />
+    <ClInclude Include="hbr\subdivision.h" />
+    <ClInclude Include="hbr\vertex.h" />
+    <ClInclude Include="hbr\vertexEdit.h" />
+    <ClInclude Include="osd\computeController.h" />
+    <ClInclude Include="osd\d3d11ComputeContext.h" />
+    <ClInclude Include="osd\d3d11ComputeController.h" />
+    <ClInclude Include="osd\d3d11DrawContext.h" />
+    <ClInclude Include="osd\d3d11DrawRegistry.h" />
+    <ClInclude Include="osd\d3d11KernelBundle.h" />
+    <ClInclude Include="osd\d3d11Mesh.h" />
+    <ClInclude Include="osd\d3d11PtexMipmapTexture.h" />
+    <ClInclude Include="osd\d3d11PtexTexture.h" />
+    <ClInclude Include="osd\d3d11VertexBuffer.h" />
+    <ClInclude Include="osd\debug.h" />
+    <ClInclude Include="osd\drawContext.h" />
+    <ClInclude Include="osd\drawRegistry.h" />
+    <ClInclude Include="osd\error.h" />
+    <ClInclude Include="osd\evalLimitContext.h" />
+    <ClInclude Include="osd\mesh.h" />
+    <ClInclude Include="osd\nonCopyable.h" />
+    <ClInclude Include="osd\opengl.h" />
+    <ClInclude Include="osd\ptexMipmapTextureLoader.h" />
+    <ClInclude Include="osd\ptexTextureLoader.h" />
+    <ClInclude Include="osd\vertex.h" />
+    <ClInclude Include="osd\vertexDescriptor.h" />
+    <ClInclude Include="version.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="osd\d3d11ComputeContext.cpp" />
+    <ClCompile Include="osd\d3d11ComputeController.cpp" />
+    <ClCompile Include="osd\d3d11DrawContext.cpp" />
+    <ClCompile Include="osd\d3d11DrawRegistry.cpp" />
+    <ClCompile Include="osd\d3d11KernelBundle.cpp" />
+    <ClCompile Include="osd\d3d11VertexBuffer.cpp" />
+    <ClCompile Include="osd\drawContext.cpp" />
+    <ClCompile Include="osd\drawRegistry.cpp" />
+    <ClCompile Include="osd\error.cpp" />
+    <ClCompile Include="osd\evalLimitContext.cpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{1C095FAC-D648-4094-8528-8844EE0B055F}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>OpenSubdiv</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <TargetName>$(ProjectName)64D</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <TargetName>$(ProjectName)64</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>far;hbr;osd;..\;..\DXUT\Core;..\DXUT\Optional;..\SDX</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy /y /f $(OutDir)$(TargetName).lib $(SolutionDir)\contrib\lib64\</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>far;hbr;osd;..\;..\DXUT\Core;..\DXUT\Optional;..\SDX</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy /y /f $(OutDir)$(TargetName).lib $(SolutionDir)\contrib\lib64\</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
