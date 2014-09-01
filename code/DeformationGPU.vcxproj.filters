@@ -271,4 +271,114 @@
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="shader\UpdateOverlap.hlsl">
+      <Filter>Resource Files\shader\Deformation</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\VoxelDDA.hlsl">
+      <Filter>Resource Files\shader\Deformation</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\Voxelization.hlsl">
+      <Filter>Resource Files\shader\Deformation</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\Deformation.hlsl">
+      <Filter>Resource Files\shader\Deformation</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\Intersect.h.hlsl">
+      <Filter>Resource Files\shader\Deformation</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\IntersectOSDCS.hlsl">
+      <Filter>Resource Files\shader\Deformation</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\MemoryManagerOSD.hlsl">
+      <Filter>Resource Files\shader\Deformation</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\TileMemory.hlsl">
+      <Filter>Resource Files\shader\Deformation</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\OSDComputeKernel.hlsl">
+      <Filter>Resource Files\shader\OpenSubdiv</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\OSDPatchBSpline.hlsl">
+      <Filter>Resource Files\shader\OpenSubdiv</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\OSDPatchCommon.hlsl">
+      <Filter>Resource Files\shader\OpenSubdiv</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\OSDPatchGregory.hlsl">
+      <Filter>Resource Files\shader\OpenSubdiv</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\OSDPatchTransition.hlsl">
+      <Filter>Resource Files\shader\OpenSubdiv</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\OSDRender.hlsl">
+      <Filter>Resource Files\shader\OpenSubdiv</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\OSDRenderPixel.hlsl">
+      <Filter>Resource Files\shader\OpenSubdiv</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\PTexLookup.hlsl">
+      <Filter>Resource Files\shader\OpenSubdiv</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\CascadeShadowBlur.hlsl">
+      <Filter>Resource Files\shader\Rendering</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\CascadeShadowRender.h.hlsl">
+      <Filter>Resource Files\shader\Rendering</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\SSAO.hlsl">
+      <Filter>Resource Files\shader\Rendering</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\LightProperties.h.hlsl">
+      <Filter>Resource Files\shader\Rendering</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\Material.h.hlsl">
+      <Filter>Resource Files\shader\Rendering</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\PostProcessing.hlsl">
+      <Filter>Resource Files\shader\Rendering</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\Raycasting.hlsl">
+      <Filter>Resource Files\shader\Rendering</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\RenderDebug.hlsl">
+      <Filter>Resource Files\shader\Rendering</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\RenderTri.hlsl">
+      <Filter>Resource Files\shader\Rendering</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\Shading.h.hlsl">
+      <Filter>Resource Files\shader\Rendering</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\ShadingLib.h.hlsl">
+      <Filter>Resource Files\shader\Rendering</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\ShadowDepthReduction.hlsl">
+      <Filter>Resource Files\shader\Rendering</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\ShadowMapping.hlsl">
+      <Filter>Resource Files\shader\Rendering</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\SkinningMinMaxCS.hlsl">
+      <Filter>Resource Files\shader\Skinning</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\SkinningCentroidBlockCS.hlsl">
+      <Filter>Resource Files\shader\Skinning</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\SkinningCentroidCS.hlsl">
+      <Filter>Resource Files\shader\Skinning</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\SkinningCovarianceBlockCS.hlsl">
+      <Filter>Resource Files\shader\Skinning</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\SkinningCovarianceCS.hlsl">
+      <Filter>Resource Files\shader\Skinning</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\SkinningCS.hlsl">
+      <Filter>Resource Files\shader\Skinning</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\SkinningMinMaxBlockCS.hlsl">
+      <Filter>Resource Files\shader\Skinning</Filter>
+    </FxCompile>
+  </ItemGroup>
 </Project>

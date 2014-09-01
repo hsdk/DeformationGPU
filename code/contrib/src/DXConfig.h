@@ -1,5 +1,5 @@
 // SELECT DIRECTX VERSION HERE
-//#define FORCE_DIRECTX_11_0
+#define FORCE_DIRECTX_11_0
 
 // If app hasn't choosen, set to work with Windows Vista and beyond
 #ifndef WINVER
