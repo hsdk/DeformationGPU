@@ -100,7 +100,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /y /f $(OutDir)$(TargetName).lib $(SolutionDir)\contrib\lib64\</Command>
+      <Command>xcopy /y /f $(OutDir)$(TargetName).lib $(SolutionDir)\contrib\lib64\
+xcopy /y /f $(OutDir)$(TargetName).dll $(SolutionDir)</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>fxc /T vs_5_0 /E LineRectVS /Fh TwDirect3D11_LineRectVS_D.h TwDirect3D11.hlsl
@@ -160,7 +161,8 @@ fxc /T ps_5_0 /E TexturePS /Fh TwDirect3D11_TexturePS.h TwDirect3D11.hlsl
 </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>xcopy /y /f $(OutDir)$(TargetName).lib $(SolutionDir)\contrib\lib64\</Command>
+      <Command>xcopy /y /f $(OutDir)$(TargetName).lib $(SolutionDir)\contrib\lib64\
+xcopy /y /f $(OutDir)$(TargetName).dll $(SolutionDir)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

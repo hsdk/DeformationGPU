@@ -1,0 +1,9 @@
+SDX - DirectX Helpers
+Copyright 2014 Henry Schäfer
+All rights reserved.
+
+This product includes software developed at
+Computer Graphics Group of the
+University of Erlangen Nuremberg (http://www9.cs.fau.de).
+
+
