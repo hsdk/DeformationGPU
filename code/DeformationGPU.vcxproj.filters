@@ -281,9 +281,6 @@
     <FxCompile Include="shader\Voxelization.hlsl">
       <Filter>Resource Files\shader\Deformation</Filter>
     </FxCompile>
-    <FxCompile Include="shader\Deformation.hlsl">
-      <Filter>Resource Files\shader\Deformation</Filter>
-    </FxCompile>
     <FxCompile Include="shader\Intersect.h.hlsl">
       <Filter>Resource Files\shader\Deformation</Filter>
     </FxCompile>
@@ -379,6 +376,9 @@
     </FxCompile>
     <FxCompile Include="shader\SkinningMinMaxBlockCS.hlsl">
       <Filter>Resource Files\shader\Skinning</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\TileEdit.hlsl">
+      <Filter>Resource Files\shader\Deformation</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

@@ -423,12 +423,12 @@ EffectRegistryPaintDeform::SourceConfigType * EffectRegistryPaintDeform::_Create
 
 	if (effect.with_constraints == 2)
 	{
-		sconfig->computeShader.sourceFile	= L"shader/Deformation.hlsl";
+		sconfig->computeShader.sourceFile	= L"shader/TileEdit.hlsl";
 		sconfig->computeShader.entry		= "ApplyConstraintsOSDCulledCS";
 	}
 	else
 	{
-		sconfig->computeShader.sourceFile	= L"shader/Deformation.hlsl";
+		sconfig->computeShader.sourceFile	= L"shader/TileEdit.hlsl";
 		sconfig->computeShader.entry		= "TileEditCS";
 		sconfig->computeShader.AddDefine("USE_VOXELDEFORM");
 
