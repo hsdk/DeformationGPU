@@ -220,7 +220,7 @@ HRESULT PostPro::Create( ID3D11Device1* pd3dDevice )
 	V_RETURN(CreateFullScreenQuad(pd3dDevice));
 
 
-	V_RETURN(DXUTCreateBuffer( pd3dDevice, D3D11_BIND_CONSTANT_BUFFER, sizeof(CB_POSTPROCESSING), D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, m_cbPostProcessing));
+	V_RETURN(DXCreateBuffer( pd3dDevice, D3D11_BIND_CONSTANT_BUFFER, sizeof(CB_POSTPROCESSING), D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, m_cbPostProcessing));
 	
 	return hr;
 }
@@ -935,7 +935,7 @@ HRESULT PostPro::CreateFullScreenQuad(ID3D11Device1* pd3dDevice)
 	};
 
 	m_uBytesPerQuadVertex = sizeof(VertexQuad);
-	V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_VERTEX_BUFFER,m_uBytesPerQuadVertex*4, 0, D3D11_USAGE_IMMUTABLE, m_fsQuadVertexBuffer, &vertices[0]));
+	V_RETURN(DXCreateBuffer(pd3dDevice, D3D11_BIND_VERTEX_BUFFER,m_uBytesPerQuadVertex*4, 0, D3D11_USAGE_IMMUTABLE, m_fsQuadVertexBuffer, &vertices[0]));
 
 	return hr;
 }

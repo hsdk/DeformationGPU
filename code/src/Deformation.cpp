@@ -62,9 +62,9 @@ HRESULT Deformation::Create( ID3D11Device1* pd3dDevice )
 	HRESULT hr = S_OK;
 
 	// constant buffers	
-	V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_CONSTANT_BUFFER, sizeof(CB_IntersectModel)		, D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, m_intersectModelCB));
-	V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_CONSTANT_BUFFER, sizeof(CB_VoxelGrid),		  D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, m_VoxelGridCB));
-	V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_CONSTANT_BUFFER, sizeof(CB_OSDConfig),		  D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, m_osdCB));
+	V_RETURN(DXCreateBuffer(pd3dDevice, D3D11_BIND_CONSTANT_BUFFER, sizeof(CB_IntersectModel)		, D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, m_intersectModelCB));
+	V_RETURN(DXCreateBuffer(pd3dDevice, D3D11_BIND_CONSTANT_BUFFER, sizeof(CB_VoxelGrid),		  D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, m_VoxelGridCB));
+	V_RETURN(DXCreateBuffer(pd3dDevice, D3D11_BIND_CONSTANT_BUFFER, sizeof(CB_OSDConfig),		  D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, m_osdCB));
 
 
 	UINT NUM_BLOCKS_COLOR =  g_app.g_colorTileSize / COLOR_DISPATCH_TILE_SIZE;
@@ -73,7 +73,7 @@ HRESULT Deformation::Create( ID3D11Device1* pd3dDevice )
 		0, NUM_BLOCKS_COLOR*NUM_BLOCKS_COLOR, 1, 1, // COLOR
 		0, NUM_BLOCKS_DISP*NUM_BLOCKS_DISP, 1, 1,
 	};
-	V_RETURN(DXUTCreateBuffer(DXUTGetD3D11Device(),	0,
+	V_RETURN(DXCreateBuffer(DXUTGetD3D11Device(),	0,
 							 2*sizeof(UINT)*4, 0,	D3D11_USAGE_DEFAULT,
 							 m_dispatchIndirectBUF, indirectInitialState, D3D11_RESOURCE_MISC_DRAWINDIRECT_ARGS, sizeof(UINT)*4));
 	DXUT_SetDebugName(m_dispatchIndirectBUF, "m_dispatchIndirectBUF");

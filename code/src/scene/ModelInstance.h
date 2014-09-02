@@ -41,30 +41,18 @@ public:
 	bool GetHasDynamicDisplacement() { return m_hasDynamicTileDisplacement; }
 	bool GetHasDynamicColor()		 { return m_hasDynamicTileColor; }
 
-	DirectX::SDXBufferSRVUAV*	GetDisplacementTileLayout() { return &m_tileLayoutDisplacement; }
-	//ID3D11ShaderResourceView*  GetDisplacementTileLayoutSRV() { return m_tileLayoutDisplacementSRV; }
-	//ID3D11UnorderedAccessView* GetDisplacementTileLayoutUAV() { return m_tileLayoutDisplacementUAV; }
+	DirectX::DXBufferSRVUAV*	GetDisplacementTileLayout() { return &m_tileLayoutDisplacement; }
+	
+	DirectX::DXBufferSRVUAV*	GetColorTileLayout() { return &m_tileLayoutColor; }
+	
+	DirectX::DXBufferSRVUAV*	GetVisibility() { return &m_visibility; }
+	
+	DirectX::DXBufferSRVUAV*	GetVisibilityAll() { return &m_visibilityAll; }
+	
+	DirectX::DXBufferSRVUAV*  GetCompactedVisibility(){ return &m_visibilityAppend; }
 
-	DirectX::SDXBufferSRVUAV*	GetColorTileLayout() { return &m_tileLayoutColor; }
-	//ID3D11ShaderResourceView*  GetColorTileLayoutSRV() { return m_tileLayoutColorSRV; }
-	//ID3D11UnorderedAccessView* GetColorTileLayoutUAV() { return m_tileLayoutColorUAV; }
 
-	DirectX::SDXBufferSRVUAV*	GetVisibility() { return &m_visibility; }
-	//ID3D11Buffer*			   GetVisibilityBUF() { return m_visibilityBUF; }
-	//ID3D11ShaderResourceView*  GetVisibilitySRV() { return m_visibilitySRV; }
-	//ID3D11UnorderedAccessView* GetVisibilityUAV() { return m_visibilityUAV; }
-
-	DirectX::SDXBufferSRVUAV*	GetVisibilityAll() { return &m_visibilityAll; }
-	//ID3D11Buffer*			   GetVisibilityAllBUF() { return m_visibilityAllBUF; }
-	//ID3D11ShaderResourceView*  GetVisibilityAllSRV() { return m_visibilityAllSRV; }
-	//ID3D11UnorderedAccessView* GetVisibilityAllUAV() { return m_visibilityAllUAV; }
-
-	DirectX::SDXBufferSRVUAV*  GetCompactedVisibility(){ return &m_visibilityAppend; }
-	//ID3D11Buffer*			   GetCompactedVisibilityBUF() { return m_visibilityAppendBUF; }
-	//ID3D11ShaderResourceView*  GetCompactedVisibilitySRV() { return m_visibilityAppendSRV; }
-	//ID3D11UnorderedAccessView* GetCompactedVisibilityUAV() { return m_visibilityAppendUAV; }
-
-	DirectX::SDXBufferSRVUAV* GetMaxDisplacement() { return &m_maxDisplacement; }
+	DirectX::DXBufferSRVUAV* GetMaxDisplacement() { return &m_maxDisplacement; }
 
 	__forceinline void SetGroup(ModelGroup* group) { m_group = group; }
 	__forceinline ModelGroup* GetGroup() { return m_group; }
@@ -95,37 +83,22 @@ protected:
 	TriangleSubmesh*				m_triangleSubmesh;
 	DXMaterial*						m_materialRef;
 
-	DXObjectOrientedBoundingBox	m_obbWorld;
+	DXObjectOrientedBoundingBox		m_obbWorld;
 	DirectX::XMMATRIX				m_modelMatrix;
 
 	// ptex/tile based for dynamic memory management
-	DirectX::SDXBufferSRVUAV		m_tileLayoutDisplacement;
-	//ID3D11Buffer*					m_tileLayoutDisplacementBUF;
-	//ID3D11ShaderResourceView*		m_tileLayoutDisplacementSRV;
-	//ID3D11UnorderedAccessView*		m_tileLayoutDisplacementUAV;
-
-	DirectX::SDXBufferSRVUAV		m_tileLayoutColor;
-	//ID3D11Buffer*					m_tileLayoutColorBUF;
-	//ID3D11ShaderResourceView*		m_tileLayoutColorSRV;
-	//ID3D11UnorderedAccessView*		m_tileLayoutColorUAV;
-
+	DirectX::DXBufferSRVUAV		m_tileLayoutDisplacement;
+	
+	DirectX::DXBufferSRVUAV		m_tileLayoutColor;
+	
 	// for storing intersection with brush/ voxelization (culling)
-	DirectX::SDXBufferSRVUAV		m_visibility;
-	//ID3D11Buffer*					m_visibilityBUF;
-	//ID3D11ShaderResourceView*		m_visibilitySRV;
-	//ID3D11UnorderedAccessView*		m_visibilityUAV;
-
-	DirectX::SDXBufferSRVUAV		m_visibilityAll;
-	//ID3D11Buffer*					m_visibilityAllBUF;
-	//ID3D11ShaderResourceView*		m_visibilityAllSRV;
-	//ID3D11UnorderedAccessView*		m_visibilityAllUAV;
-
-	DirectX::SDXBufferSRVUAV		m_visibilityAppend;
-	//ID3D11Buffer*					m_visibilityAppendBUF;
-	//ID3D11ShaderResourceView*		m_visibilityAppendSRV;
-	//ID3D11UnorderedAccessView*		m_visibilityAppendUAV;
-
-	DirectX::SDXBufferSRVUAV		m_maxDisplacement;	
+	DirectX::DXBufferSRVUAV		m_visibility;
+	
+	DirectX::DXBufferSRVUAV		m_visibilityAll;
+	
+	DirectX::DXBufferSRVUAV		m_visibilityAppend;
+	
+	DirectX::DXBufferSRVUAV		m_maxDisplacement;	
 	
 	ModelGroup* m_group;
 

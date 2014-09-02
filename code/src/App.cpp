@@ -24,11 +24,11 @@ HRESULT App::Create( ID3D11Device1* pd3dDevice )
 	HRESULT hr = S_OK;
 	// Setup constant buffers
 	
-	V_RETURN(DXUTCreateBuffer(pd3dDevice,D3D11_BIND_CONSTANT_BUFFER, sizeof(CB_PER_FRAME), D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, g_CBCamera));
+	V_RETURN(DXCreateBuffer(pd3dDevice,D3D11_BIND_CONSTANT_BUFFER, sizeof(CB_PER_FRAME), D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, g_CBCamera));
 	DXUT_SetDebugName(g_CBCamera, "g_pCamCB");
 		
 
-	V_RETURN(DXUTCreateBuffer(pd3dDevice,D3D11_BIND_CONSTANT_BUFFER, sizeof(CB_GEN_SHADOW), D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, g_CBGenShadow));
+	V_RETURN(DXCreateBuffer(pd3dDevice,D3D11_BIND_CONSTANT_BUFFER, sizeof(CB_GEN_SHADOW), D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, g_CBGenShadow));
 	DXUT_SetDebugName(g_CBGenShadow, "g_CBGenShadow");
 
 	// create performance query

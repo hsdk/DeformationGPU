@@ -22,11 +22,11 @@ struct streamStruct {
 	DirectX::XMFLOAT3A normal;
 };
 
-class DebugStreamOutput
+class DXDebugStreamOutput
 {
 public:
-	DebugStreamOutput(void);
-	~DebugStreamOutput(void);
+	DXDebugStreamOutput(void);
+	~DXDebugStreamOutput(void);
 	
 	HRESULT Create(ID3D11Device1* pd3dDevice);
 	void Destroy();
@@ -65,4 +65,4 @@ private:
 
 };
 
-extern DebugStreamOutput g_Dso;
+extern DXDebugStreamOutput g_Dso;

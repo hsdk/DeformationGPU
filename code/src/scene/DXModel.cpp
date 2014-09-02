@@ -48,7 +48,7 @@ HRESULT TriangleSubmesh::Create( ID3D11Device1* pd3dDevice, const SubMeshData* d
 
 	HRESULT hr = S_OK;
 
-	V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_INDEX_BUFFER , _numFaces * sizeof(XMUINT3), 0, D3D11_USAGE_IMMUTABLE, _indexBuffer, (void*)&data->indicesTri[0]));
+	V_RETURN(DXCreateBuffer(pd3dDevice, D3D11_BIND_INDEX_BUFFER , _numFaces * sizeof(XMUINT3), 0, D3D11_USAGE_IMMUTABLE, _indexBuffer, (void*)&data->indicesTri[0]));
 	DXUT_SetDebugName(_indexBuffer,"Triangle Submesh index buffer");
 	
 	// init oriented bounding boxes	
@@ -158,7 +158,7 @@ HRESULT DXModel::Create( ID3D11Device1* pd3dDevice,
 	//m_skinningMeshAnimationManager = meshData->skinning; 
 	
 
-	V_RETURN(DXUTCreateBuffer(pd3dDevice,	D3D11_BIND_VERTEX_BUFFER | D3D11_BIND_SHADER_RESOURCE | (withSkinning ? D3D11_BIND_UNORDERED_ACCESS : 0),
+	V_RETURN(DXCreateBuffer(pd3dDevice,	D3D11_BIND_VERTEX_BUFFER | D3D11_BIND_SHADER_RESOURCE | (withSkinning ? D3D11_BIND_UNORDERED_ACCESS : 0),
 			_numVertices * sizeof(XMFLOAT4A), 0, (withSkinning ? D3D11_USAGE_DEFAULT : D3D11_USAGE_IMMUTABLE), _vertexBuffer,  &meshData->vertices[0]));
 		
 	std::vector<XMFLOAT4A> N(_numVertices);
@@ -171,14 +171,14 @@ HRESULT DXModel::Create( ID3D11Device1* pd3dDevice,
 			N[i] = XMFLOAT4A(meshData->normals[i].x, meshData->normals[i].y, meshData->normals[i].z, 0.0f);
 		}
 
-		V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_VERTEX_BUFFER | D3D11_BIND_SHADER_RESOURCE | (withSkinning ? D3D11_BIND_UNORDERED_ACCESS : 0), _numVertices * sizeof(XMFLOAT4A),
+		V_RETURN(DXCreateBuffer(pd3dDevice, D3D11_BIND_VERTEX_BUFFER | D3D11_BIND_SHADER_RESOURCE | (withSkinning ? D3D11_BIND_UNORDERED_ACCESS : 0), _numVertices * sizeof(XMFLOAT4A),
 			0, (withSkinning ? D3D11_USAGE_DEFAULT : D3D11_USAGE_IMMUTABLE), _normalsBuffer,  &N[0]));
 	}
 
 	if(meshData->texcoords.size() > 0)
 	{
 		assert(meshData->texcoords.size() == _numVertices);
-		V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_VERTEX_BUFFER | D3D11_BIND_SHADER_RESOURCE, _numVertices * sizeof(XMFLOAT2A), 0, D3D11_USAGE_IMMUTABLE, _texcoordBuffer, &meshData->texcoords[0]));
+		V_RETURN(DXCreateBuffer(pd3dDevice, D3D11_BIND_VERTEX_BUFFER | D3D11_BIND_SHADER_RESOURCE, _numVertices * sizeof(XMFLOAT2A), 0, D3D11_USAGE_IMMUTABLE, _texcoordBuffer, &meshData->texcoords[0]));
 	}
 
 	// process submeshes
@@ -226,7 +226,7 @@ HRESULT DXModel::Create( ID3D11Device1* pd3dDevice,
 		DXUT_SetDebugName(g_pVertexBufferUAV,"g_pVertexBufferUAV");
 
 		// creating the vertex buffer and it's views
-		V_RETURN(DXUTCreateBuffer(DXUTGetD3D11Device(),	D3D11_BIND_VERTEX_BUFFER | D3D11_BIND_UNORDERED_ACCESS | D3D11_BIND_SHADER_RESOURCE,	_numVertices * sizeof(XMFLOAT4A), 0,	D3D11_USAGE_DEFAULT,
+		V_RETURN(DXCreateBuffer(DXUTGetD3D11Device(),	D3D11_BIND_VERTEX_BUFFER | D3D11_BIND_UNORDERED_ACCESS | D3D11_BIND_SHADER_RESOURCE,	_numVertices * sizeof(XMFLOAT4A), 0,	D3D11_USAGE_DEFAULT,
 			g_pVertexBufferBasePose, &meshData->vertices[0], 0, sizeof(XMFLOAT4A)));
 		DXUT_SetDebugName(g_pVertexBufferBasePose,"g_pVertexBufferBasePose");
 
@@ -262,7 +262,7 @@ HRESULT DXModel::Create( ID3D11Device1* pd3dDevice,
 		DXUT_SetDebugName(g_pNormalsBufferUAV,"g_pNormalsBufferUAV");
 
 		// create the vertex buffer and it's views
-		V_RETURN(DXUTCreateBuffer(DXUTGetD3D11Device(),	D3D11_BIND_VERTEX_BUFFER | D3D11_BIND_UNORDERED_ACCESS | D3D11_BIND_SHADER_RESOURCE,
+		V_RETURN(DXCreateBuffer(DXUTGetD3D11Device(),	D3D11_BIND_VERTEX_BUFFER | D3D11_BIND_UNORDERED_ACCESS | D3D11_BIND_SHADER_RESOURCE,
 			_numVertices * sizeof(XMFLOAT4A), 0,	D3D11_USAGE_DEFAULT,
 			g_pNormalsBufferBasePose, (void*)&N[0], 0, sizeof(XMFLOAT4A)));
 		DXUT_SetDebugName(g_pNormalsBufferBasePose,"g_pNormalsBufferBasePose");

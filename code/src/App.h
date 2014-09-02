@@ -15,7 +15,6 @@ static ID3D11ShaderResourceView*	const g_ppSRVNULL[] = {NULL, NULL, NULL, NULL, 
 static ID3D11UnorderedAccessView*	const g_ppUAVNULL[] = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL};
 static ID3D11SamplerState*			const g_ppSSNULL[]  = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL};
 
-
 #define NUM_CASCADES 3
 #define DEFORMATION_BATCH_SIZE 6
 // constant buffer IDs, make sure to use these IDs in shaders

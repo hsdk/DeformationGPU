@@ -553,7 +553,7 @@ HRESULT ShadowMapping::Create( ID3D11Device1* pd3dDevice )
 {
 	HRESULT hr = S_OK;
 
-	V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_CONSTANT_BUFFER, sizeof(CB_CASCADES_PROJECTION), D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, m_shadowCascadesProjCB));
+	V_RETURN(DXCreateBuffer(pd3dDevice, D3D11_BIND_CONSTANT_BUFFER, sizeof(CB_CASCADES_PROJECTION), D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, m_shadowCascadesProjCB));
 
 	DXGI_FORMAT shadowBufferFormat = DXGI_FORMAT_R32G32_FLOAT;
 
@@ -610,7 +610,7 @@ HRESULT ShadowMapping::Create( ID3D11Device1* pd3dDevice )
 	//CHECKME TODO backface culling
 	DXUT_SetDebugName(m_prsShadow,"VSM Shadow RS");
 
-	DXUTCreateBuffer(pd3dDevice, D3D11_BIND_CONSTANT_BUFFER, sizeof(CB_LIGHT), D3D11_CPU_ACCESS_WRITE,  D3D11_USAGE_DYNAMIC, m_cbLight);
+	DXCreateBuffer(pd3dDevice, D3D11_BIND_CONSTANT_BUFFER, sizeof(CB_LIGHT), D3D11_CPU_ACCESS_WRITE,  D3D11_USAGE_DYNAMIC, m_cbLight);
 	DXUT_SetDebugName( m_cbLight, "VSM CB_ALL_SHADOW_DATA" ); 
 	
 
@@ -819,7 +819,7 @@ HRESULT ShadowMapping::Create( ID3D11Device1* pd3dDevice )
 		descSRV.Buffer.NumElements = numElements;		
 		descUAV.Buffer.NumElements = numElements;	
 
-		V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, byteSize, 0, D3D11_USAGE_DEFAULT, m_depthScanBucketsBUF)); 						
+		V_RETURN(DXCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, byteSize, 0, D3D11_USAGE_DEFAULT, m_depthScanBucketsBUF)); 						
 		V_RETURN(pd3dDevice->CreateShaderResourceView(m_depthScanBucketsBUF,		&descSRV, &m_depthScanBucketsSRV));		
 		V_RETURN(pd3dDevice->CreateUnorderedAccessView(m_depthScanBucketsBUF,	&descUAV, &m_depthScanBucketsUAV));
 
@@ -829,7 +829,7 @@ HRESULT ShadowMapping::Create( ID3D11Device1* pd3dDevice )
 		byteSize = numElements*elemSize;
 		descSRV.Buffer.NumElements = numElements;		
 		descUAV.Buffer.NumElements = numElements;	
-		V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, byteSize, 0, D3D11_USAGE_DEFAULT, m_depthScanBucketsResultsBUF)); 						
+		V_RETURN(DXCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, byteSize, 0, D3D11_USAGE_DEFAULT, m_depthScanBucketsResultsBUF)); 						
 		V_RETURN(pd3dDevice->CreateShaderResourceView(m_depthScanBucketsResultsBUF,		&descSRV, &m_depthScanBucketsResultsSRV));		
 		V_RETURN(pd3dDevice->CreateUnorderedAccessView(m_depthScanBucketsResultsBUF,	&descUAV, &m_depthScanBucketsResultsUAV));
 
@@ -838,7 +838,7 @@ HRESULT ShadowMapping::Create( ID3D11Device1* pd3dDevice )
 		byteSize = numElements*elemSize;
 		descSRV.Buffer.NumElements = numElements;		
 		descUAV.Buffer.NumElements = numElements;	
-		V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, byteSize, 0, D3D11_USAGE_DEFAULT, m_depthScanBucketsBlockResultsBUF)); 						
+		V_RETURN(DXCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, byteSize, 0, D3D11_USAGE_DEFAULT, m_depthScanBucketsBlockResultsBUF)); 						
 		V_RETURN(pd3dDevice->CreateShaderResourceView(m_depthScanBucketsBlockResultsBUF,	&descSRV, &m_depthScanBucketsBlockResultsSRV));		
 		V_RETURN(pd3dDevice->CreateUnorderedAccessView(m_depthScanBucketsBlockResultsBUF,	&descUAV, &m_depthScanBucketsBlockResultsUAV));
 
@@ -855,8 +855,8 @@ HRESULT ShadowMapping::Create( ID3D11Device1* pd3dDevice )
 		XMFLOAT2 initMinMax[] = {XMFLOAT2(0,1)};
 		for(int i = 0; i < 3; ++i)
 		{		
-			V_RETURN(DXUTCreateBuffer(DXUTGetD3D11Device(), 0, byteSize,  D3D11_CPU_ACCESS_READ, D3D11_USAGE_STAGING, m_depthReductionResultStagingBUF[i],&initMinMax[0] ));
-			V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_UNORDERED_ACCESS, byteSize, 0, D3D11_USAGE_DEFAULT, m_depthReductionResultBUF[i],&initMinMax[0]));
+			V_RETURN(DXCreateBuffer(DXUTGetD3D11Device(), 0, byteSize,  D3D11_CPU_ACCESS_READ, D3D11_USAGE_STAGING, m_depthReductionResultStagingBUF[i],&initMinMax[0] ));
+			V_RETURN(DXCreateBuffer(pd3dDevice, D3D11_BIND_UNORDERED_ACCESS, byteSize, 0, D3D11_USAGE_DEFAULT, m_depthReductionResultBUF[i],&initMinMax[0]));
 			V_RETURN(pd3dDevice->CreateUnorderedAccessView(m_depthReductionResultBUF[i],	&descUAV, &m_depthReductionResultUAV[i]));
 
 			//V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_UNORDERED_ACCESS, byteSize, 0, D3D11_USAGE_DEFAULT, m_depthReductionResultReductionAtomicBUF[i]));
@@ -864,7 +864,7 @@ HRESULT ShadowMapping::Create( ID3D11Device1* pd3dDevice )
 
 		}
 		// depth reduction settings cb
-		V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_CONSTANT_BUFFER, sizeof(CB_DEPTH_REDUCTION), D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, m_depthReductionCB));
+		V_RETURN(DXCreateBuffer(pd3dDevice, D3D11_BIND_CONSTANT_BUFFER, sizeof(CB_DEPTH_REDUCTION), D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, m_depthReductionCB));
 
 
 		// shaders

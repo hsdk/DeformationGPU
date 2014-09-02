@@ -676,7 +676,7 @@ HRESULT CALLBACK OnD3D11CreateDevice( ID3D11Device1* pd3dDevice,
 	//V_RETURN(DXUTCreateBuffer(pd3dDevice,D3D11_BIND_CONSTANT_BUFFER, sizeof(CB_PER_FRAME), D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, g_CBCamera));
 	//DXUT_DEBUG_NAME(g_CBCamera, "g_pCamCB");
 
-	V_RETURN(DXUTCreateBuffer(pd3dDevice,D3D11_BIND_CONSTANT_BUFFER, sizeof(CB_CAMEYE_DIST), D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, g_CBEyeZdist));
+	V_RETURN(DXCreateBuffer(pd3dDevice,D3D11_BIND_CONSTANT_BUFFER, sizeof(CB_CAMEYE_DIST), D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, g_CBEyeZdist));
 	DXUT_SetDebugName(g_CBEyeZdist, "g_CBEyeZdist");
 
 
@@ -696,7 +696,7 @@ HRESULT CALLBACK OnD3D11CreateDevice( ID3D11Device1* pd3dDevice,
 	
 	XMStoreFloat4(&light.lightDirES, XMVector3Normalize(XMVector4Transform(vLightDir, camView)));
 	light.lightDirWS = lightDirWS;
-	V_RETURN(DXUTCreateBuffer(pd3dDevice,D3D11_BIND_CONSTANT_BUFFER, sizeof(CB_LIGHT), D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, g_CBLight, &light));
+	V_RETURN(DXCreateBuffer(pd3dDevice,D3D11_BIND_CONSTANT_BUFFER, sizeof(CB_LIGHT), D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, g_CBLight, &light));
 	DXUT_SetDebugName(g_CBLight, "g_CBLight");
 
 	pd3dImmediateContext->CSSetConstantBuffers( CB_LOC::LIGHT_PROPERTIES, 1, &g_CBLight );

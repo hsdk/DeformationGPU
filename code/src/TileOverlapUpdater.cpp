@@ -61,11 +61,11 @@ TileOverlapUpdater::~TileOverlapUpdater()
 HRESULT TileOverlapUpdater::Create( ID3D11Device1* pd3dDevice )
 {
 	HRESULT hr = S_OK;
-	V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_CONSTANT_BUFFER, sizeof(CB_UpdateExtarodinary)	, D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, m_updateExtraordinaryCB));
+	V_RETURN(DXCreateBuffer(pd3dDevice, D3D11_BIND_CONSTANT_BUFFER, sizeof(CB_UpdateExtarodinary)	, D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, m_updateExtraordinaryCB));
 	
 	// indirect dispatch buffer to update overlap only on modified tiles
 	UINT indirectInitialState[] = {	0, 1, 1, 1 };
-	V_RETURN(DXUTCreateBuffer(DXUTGetD3D11Device(),	0,	sizeof(UINT)*4, 0,	D3D11_USAGE_DEFAULT, m_dispatchIndirectBUF, indirectInitialState, D3D11_RESOURCE_MISC_DRAWINDIRECT_ARGS, sizeof(UINT)*4));
+	V_RETURN(DXCreateBuffer(DXUTGetD3D11Device(),	0,	sizeof(UINT)*4, 0,	D3D11_USAGE_DEFAULT, m_dispatchIndirectBUF, indirectInitialState, D3D11_RESOURCE_MISC_DRAWINDIRECT_ARGS, sizeof(UINT)*4));
 	DXUT_SetDebugName(m_dispatchIndirectBUF, "TileOverlapUpdater dispatchIndirectBUF");
 
 

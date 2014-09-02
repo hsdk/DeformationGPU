@@ -92,7 +92,7 @@ HRESULT DXOSDMesh::Create( ID3D11Device1* pd3dDevice, HbrMesh<OsdVertex> *hbrMes
 			}
 		}
 				
-		V_RETURN(DXUTCreateBuffer(pd3dDevice,	D3D11_BIND_VERTEX_BUFFER | D3D11_BIND_SHADER_RESOURCE ,	static_cast<unsigned int>(cageEdges.size()*sizeof(XMFLOAT3)),
+		V_RETURN(DXCreateBuffer(pd3dDevice,	D3D11_BIND_VERTEX_BUFFER | D3D11_BIND_SHADER_RESOURCE ,	static_cast<unsigned int>(cageEdges.size()*sizeof(XMFLOAT3)),
 								  0,D3D11_USAGE_IMMUTABLE, m_cageEdgeVertices,  &cageEdges[0].x));
 
 		m_numCageEdgeVertices = static_cast<unsigned int>(cageEdges.size());
@@ -189,7 +189,7 @@ HRESULT DXOSDMesh::Create( ID3D11Device1* pd3dDevice, HbrMesh<OsdVertex> *hbrMes
 								  << "e3: ptexID: " << testEntry.ptexIDNeighbor[3] << ", we are edge " << testEntry.neighEdgeID[3] << std::endl;
 
 #endif
-		V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE, numElements*sizeof(SPtexNeighborData), 0, D3D11_USAGE_IMMUTABLE, m_ptexNeighDataBUF,  &m_ptexNeighDataCPU[0].ptexIDNeighbor[0]));
+		V_RETURN(DXCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE, numElements*sizeof(SPtexNeighborData), 0, D3D11_USAGE_IMMUTABLE, m_ptexNeighDataBUF,  &m_ptexNeighDataCPU[0].ptexIDNeighbor[0]));
 
 		D3D11_SHADER_RESOURCE_VIEW_DESC descSRV;
 		ZeroMemory(&descSRV, sizeof(descSRV));
@@ -208,7 +208,7 @@ HRESULT DXOSDMesh::Create( ID3D11Device1* pd3dDevice, HbrMesh<OsdVertex> *hbrMes
 			numElements = static_cast<UINT>(m_extraordinaryInfoCPU.size()); // should have been set by loader
 			descSRV.Format = DXGI_FORMAT_R32_UINT;		
 
-			V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE, numElements*sizeof(SExtraordinaryInfo), 0, D3D11_USAGE_IMMUTABLE, m_extraordinaryInfoBUF,  &m_extraordinaryInfoCPU[0].startIndex));
+			V_RETURN(DXCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE, numElements*sizeof(SExtraordinaryInfo), 0, D3D11_USAGE_IMMUTABLE, m_extraordinaryInfoBUF,  &m_extraordinaryInfoCPU[0].startIndex));
 
 			descSRV.Buffer.NumElements = numElements*sizeof(SExtraordinaryInfo)/sizeof(UINT);
 			V_RETURN(pd3dDevice->CreateShaderResourceView(m_extraordinaryInfoBUF, &descSRV, &m_extraordinaryInfoSRV));
@@ -222,7 +222,7 @@ HRESULT DXOSDMesh::Create( ID3D11Device1* pd3dDevice, HbrMesh<OsdVertex> *hbrMes
 			numElements = static_cast<UINT>(m_extraordinaryDataCPU.size()); // should have been set by loader
 			descSRV.Format = DXGI_FORMAT_R32_UINT;		
 
-			V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE, numElements*sizeof(SExtraordinaryData), 0, D3D11_USAGE_IMMUTABLE, m_extraordinaryDataBUF,  &m_extraordinaryDataCPU[0].ptexFaceID));
+			V_RETURN(DXCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE, numElements*sizeof(SExtraordinaryData), 0, D3D11_USAGE_IMMUTABLE, m_extraordinaryDataBUF,  &m_extraordinaryDataCPU[0].ptexFaceID));
 
 			descSRV.Buffer.NumElements =numElements*sizeof(SExtraordinaryData)/sizeof(UINT);
 			V_RETURN(pd3dDevice->CreateShaderResourceView(m_extraordinaryDataBUF, &descSRV, &m_extraordinaryDataSRV));

@@ -59,9 +59,9 @@ HRESULT IntersectGPU::Create( ID3D11Device1* pd3dDevice )
 
 	// DATA
 	// constant buffers	
-	V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_CONSTANT_BUFFER, sizeof(CB_OSDConfig)			, D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, m_osdConfigCB));
-	V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_CONSTANT_BUFFER, sizeof(CB_IntersectModel)		, D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, m_intersectModelCB));	
-	V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_CONSTANT_BUFFER, sizeof(CB_IntersectOBBBatch)	, D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, m_intersectOBBBatchCB));
+	V_RETURN(DXCreateBuffer(pd3dDevice, D3D11_BIND_CONSTANT_BUFFER, sizeof(CB_OSDConfig)			, D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, m_osdConfigCB));
+	V_RETURN(DXCreateBuffer(pd3dDevice, D3D11_BIND_CONSTANT_BUFFER, sizeof(CB_IntersectModel)		, D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, m_intersectModelCB));	
+	V_RETURN(DXCreateBuffer(pd3dDevice, D3D11_BIND_CONSTANT_BUFFER, sizeof(CB_IntersectOBBBatch)	, D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, m_intersectOBBBatchCB));
 	
 
 
@@ -72,10 +72,10 @@ HRESULT IntersectGPU::Create( ID3D11Device1* pd3dDevice )
 	UINT numPatchDataElements = 600000; // about 7 MB for UINT3 (gregory), 4.5 MB for UINT2 regular - has to be that large for complete displacement map transfer where all patches are active/intersected
 	for (uint32_t i = 0; i < DEFORMATION_BATCH_SIZE; ++i)
 	{		
-		V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, numPatchDataElements*sizeof(UINT) * 2,
+		V_RETURN(DXCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, numPatchDataElements*sizeof(UINT) * 2,
 			0, D3D11_USAGE_DEFAULT, m_patchAppendRegular[i].BUF, NULL, D3D11_RESOURCE_MISC_BUFFER_STRUCTURED, sizeof(UINT) * 2));
 
-		V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, numPatchDataElements*sizeof(UINT) * 3,
+		V_RETURN(DXCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, numPatchDataElements*sizeof(UINT) * 3,
 								  0, D3D11_USAGE_DEFAULT, m_patchAppendGregory[i].BUF, NULL, D3D11_RESOURCE_MISC_BUFFER_STRUCTURED, sizeof(UINT) * 3));
 
 		// SRV
@@ -506,7 +506,7 @@ HRESULT IntersectGPU::IntersectOSDBatch(ID3D11DeviceContext1 *pd3dImmediateConte
 		int numFaces = instance->GetOSDMesh()->GetNumPTexFaces();
 
 		ID3D11Buffer* stagingBUF = NULL;
-		V_RETURN(DXUTCreateBuffer(DXUTGetD3D11Device(), 0, numFaces*sizeof(UCHAR), D3D11_CPU_ACCESS_READ, D3D11_USAGE_STAGING, stagingBUF));
+		V_RETURN(DXCreateBuffer(DXUTGetD3D11Device(), 0, numFaces*sizeof(UCHAR), D3D11_CPU_ACCESS_READ, D3D11_USAGE_STAGING, stagingBUF));
 
 		pd3dImmediateContext->CopyResource(stagingBUF, instance->GetVisibility()->BUF);
 		//g_app.WaitForGPU();
@@ -531,7 +531,7 @@ HRESULT IntersectGPU::IntersectOSDBatch(ID3D11DeviceContext1 *pd3dImmediateConte
 		for (uint32_t i = 0; i < batchSize; ++i)
 		{
 			ID3D11Buffer* stagingBUF;
-			DXUTCreateBuffer(DXUTGetD3D11Device(), 0, 1 * sizeof(UINT), D3D11_CPU_ACCESS_READ, D3D11_USAGE_STAGING, stagingBUF);
+			DXCreateBuffer(DXUTGetD3D11Device(), 0, 1 * sizeof(UINT), D3D11_CPU_ACCESS_READ, D3D11_USAGE_STAGING, stagingBUF);
 			pd3dImmediateContext->CopyStructureCount(stagingBUF, 0, m_patchAppendRegular[i].UAV);
 
 			UINT numWorkRenderPatches = 0;
@@ -555,7 +555,7 @@ HRESULT IntersectGPU::CreateVisibilityBuffer( ID3D11Device1* pd3dDevice, UINT nu
 	//DXGI_FORMAT format = DXGI_FORMAT_R8_UINT;
 
 	// we want UINT32 to reuse this buffer as compacted buffer
-	V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE |D3D11_BIND_UNORDERED_ACCESS, numTiles * sizeof(UINT), 0, D3D11_USAGE_DEFAULT, visibilityBUF));
+	V_RETURN(DXCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE |D3D11_BIND_UNORDERED_ACCESS, numTiles * sizeof(UINT), 0, D3D11_USAGE_DEFAULT, visibilityBUF));
 	DXGI_FORMAT format = DXGI_FORMAT_R32_UINT;
 
 	int numElements = numTiles;
@@ -587,7 +587,7 @@ HRESULT IntersectGPU::CreateCompactedVisibilityBuffer( ID3D11Device1* pd3dDevice
 {
 	// append buffer with tile ids that are visible
 	HRESULT hr = S_OK;
-	V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE |D3D11_BIND_UNORDERED_ACCESS, numTiles * sizeof(UINT), 0, D3D11_USAGE_DEFAULT, visibilityBUF,NULL, D3D11_RESOURCE_MISC_BUFFER_STRUCTURED, sizeof(UINT)));
+	V_RETURN(DXCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE |D3D11_BIND_UNORDERED_ACCESS, numTiles * sizeof(UINT), 0, D3D11_USAGE_DEFAULT, visibilityBUF,NULL, D3D11_RESOURCE_MISC_BUFFER_STRUCTURED, sizeof(UINT)));
 	DXGI_FORMAT format = DXGI_FORMAT_R32_UINT;
 
 	int numElements = numTiles;

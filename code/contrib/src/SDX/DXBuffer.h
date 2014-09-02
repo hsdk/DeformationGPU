@@ -47,17 +47,17 @@ __forceinline void* CreateAndCopyToDebugBuf(ID3D11DeviceContext1* pd3dImmediateC
 }
 
 #ifdef DIRECTX_11_1_ENABLED
-HRESULT WINAPI DXUTCreateBuffer(ID3D11Device1* pd3dDevice, UINT bindFlags, UINT byteWidth, UINT cpuAccessFlag, D3D11_USAGE usage, ID3D11Buffer* &pBuffer, void* pData = NULL, UINT misc_flags = 0, UINT structuredByteStride = 0);
+HRESULT WINAPI DXCreateBuffer(ID3D11Device1* pd3dDevice, UINT bindFlags, UINT byteWidth, UINT cpuAccessFlag, D3D11_USAGE usage, ID3D11Buffer* &pBuffer, void* pData = NULL, UINT misc_flags = 0, UINT structuredByteStride = 0);
 #else
-HRESULT WINAPI DXUTCreateBuffer(ID3D11Device* pd3dDevice, UINT bindFlags, UINT byteWidth, UINT cpuAccessFlag, D3D11_USAGE usage, ID3D11Buffer* &pBuffer, void* pData = NULL, UINT misc_flags = 0, UINT structuredByteStride = 0);
+HRESULT WINAPI DXCreateBuffer(ID3D11Device* pd3dDevice, UINT bindFlags, UINT byteWidth, UINT cpuAccessFlag, D3D11_USAGE usage, ID3D11Buffer* &pBuffer, void* pData = NULL, UINT misc_flags = 0, UINT structuredByteStride = 0);
 #endif
 
 namespace DirectX{
-	class SDXBufferSRVUAV
+	class DXBufferSRVUAV
 	{
 	public:
-		SDXBufferSRVUAV() :BUF(nullptr), SRV(nullptr), UAV(nullptr){}
-		~SDXBufferSRVUAV(){ Destroy(); }
+		DXBufferSRVUAV() :BUF(nullptr), SRV(nullptr), UAV(nullptr){}
+		~DXBufferSRVUAV(){ Destroy(); }
 
 		void Destroy()
 		{
@@ -71,11 +71,11 @@ namespace DirectX{
 		ID3D11UnorderedAccessView* UAV;
 	};
 
-	class SDXBufferSRV
+	class DXBufferSRV
 	{
 	public:
-		SDXBufferSRV() :BUF(nullptr), SRV(nullptr){}
-		~SDXBufferSRV(){ Destroy(); }
+		DXBufferSRV() :BUF(nullptr), SRV(nullptr){}
+		~DXBufferSRV(){ Destroy(); }
 
 		void Destroy()
 		{
@@ -87,11 +87,11 @@ namespace DirectX{
 		ID3D11ShaderResourceView* SRV;		
 	};
 
-	class SDXBufferUAV
+	class DXBufferUAV
 	{
 	public:
-		SDXBufferUAV() :BUF(nullptr), UAV(nullptr){}
-		~SDXBufferUAV(){ Destroy(); }
+		DXBufferUAV() :BUF(nullptr), UAV(nullptr){}
+		~DXBufferUAV(){ Destroy(); }
 
 		void Destroy()
 		{

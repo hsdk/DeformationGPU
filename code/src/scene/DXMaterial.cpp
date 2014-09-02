@@ -69,6 +69,6 @@ HRESULT DXMaterial::initCB()
 	mat.Nshininess	= _shininess;
 
 
-	V_RETURN(DXUTCreateBuffer(DXUTGetD3D11Device(), D3D11_BIND_CONSTANT_BUFFER, sizeof(CB_MATERIAL), 0, D3D11_USAGE_IMMUTABLE, _cbMat, &mat));
+	V_RETURN(DXCreateBuffer(DXUTGetD3D11Device(), D3D11_BIND_CONSTANT_BUFFER, sizeof(CB_MATERIAL), 0, D3D11_USAGE_IMMUTABLE, _cbMat, &mat));
 	return hr;
 }

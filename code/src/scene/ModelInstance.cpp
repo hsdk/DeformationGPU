@@ -165,7 +165,7 @@ HRESULT ModelInstance::EnableDynamicDisplacement()
 
 			{
 				std::vector<float> initMaxDisplacement(numTiles, 0);
-				V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, numTiles * sizeof(float), 0, D3D11_USAGE_DEFAULT, m_maxDisplacement.BUF, &initMaxDisplacement[0]));
+				V_RETURN(DXCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, numTiles * sizeof(float), 0, D3D11_USAGE_DEFAULT, m_maxDisplacement.BUF, &initMaxDisplacement[0]));
 								
 				{
 					D3D11_SHADER_RESOURCE_VIEW_DESC descSRV;

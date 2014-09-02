@@ -108,8 +108,8 @@ private:
 	ID3D11Buffer				*m_intersectModelCB;
 	ID3D11Buffer				*m_intersectOBBBatchCB;
 
-	DirectX::SDXBufferSRVUAV	m_patchAppendRegular[8];
-	DirectX::SDXBufferSRVUAV	m_patchAppendGregory[8];
+	DirectX::DXBufferSRVUAV	m_patchAppendRegular[8];
+	DirectX::DXBufferSRVUAV	m_patchAppendGregory[8];
 
 	IntersectMode				m_intersectMode;
 	unsigned int				m_isctMeshMaxValence;

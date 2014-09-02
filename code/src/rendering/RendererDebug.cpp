@@ -70,12 +70,12 @@ HRESULT RendererBoundingGeometry::Create(ID3D11Device1* pd3dDevice)
 	SAFE_RELEASE(pBlob);
 
 	V_RETURN(initCube());
-	V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_CONSTANT_BUFFER, sizeof(CB_MODEL_MATRIX), D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, _cbModelMatrix));
+	V_RETURN(DXCreateBuffer(pd3dDevice, D3D11_BIND_CONSTANT_BUFFER, sizeof(CB_MODEL_MATRIX), D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, _cbModelMatrix));
 
 
 	// create dynamic buffers
-	V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_VERTEX_BUFFER, 8 * sizeof(XMFLOAT3), D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, _vertexBufferDynamic));
-	V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_INDEX_BUFFER, 24 * sizeof(UINT), D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, _indexBufferDynamic));
+	V_RETURN(DXCreateBuffer(pd3dDevice, D3D11_BIND_VERTEX_BUFFER, 8 * sizeof(XMFLOAT3), D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, _vertexBufferDynamic));
+	V_RETURN(DXCreateBuffer(pd3dDevice, D3D11_BIND_INDEX_BUFFER, 24 * sizeof(UINT), D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, _indexBufferDynamic));
 	return hr;
 }
 
@@ -364,9 +364,9 @@ HRESULT RendererBoundingGeometry::initCube()
 							  2, 3, 6,		6, 3, 7,	// back wall		
 							  1, 5, 0,		0, 5, 4, };	// front wall
 	
-	V_RETURN(DXUTCreateBuffer(DXUTGetD3D11Device(), D3D11_BIND_VERTEX_BUFFER, 8 * sizeof(XMFLOAT3), 0, D3D11_USAGE_IMMUTABLE, _vertexBufferStatic, &vertices[0]));
-	V_RETURN(DXUTCreateBuffer(DXUTGetD3D11Device(), D3D11_BIND_INDEX_BUFFER, 24 * sizeof(UINT), 0, D3D11_USAGE_IMMUTABLE, _linesIndicesBuffer, &indicesLines[0]));
-	V_RETURN(DXUTCreateBuffer(DXUTGetD3D11Device(), D3D11_BIND_INDEX_BUFFER, 36 * sizeof(UINT), 0, D3D11_USAGE_IMMUTABLE, _solidIndicesBuffer, &indicesSolid[0]));
+	V_RETURN(DXCreateBuffer(DXUTGetD3D11Device(), D3D11_BIND_VERTEX_BUFFER, 8 * sizeof(XMFLOAT3), 0, D3D11_USAGE_IMMUTABLE, _vertexBufferStatic, &vertices[0]));
+	V_RETURN(DXCreateBuffer(DXUTGetD3D11Device(), D3D11_BIND_INDEX_BUFFER, 24 * sizeof(UINT), 0, D3D11_USAGE_IMMUTABLE, _linesIndicesBuffer, &indicesLines[0]));
+	V_RETURN(DXCreateBuffer(DXUTGetD3D11Device(), D3D11_BIND_INDEX_BUFFER, 36 * sizeof(UINT), 0, D3D11_USAGE_IMMUTABLE, _solidIndicesBuffer, &indicesSolid[0]));
 
 
 

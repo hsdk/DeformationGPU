@@ -22,10 +22,10 @@
 
 extern void WaitForGPU();
 
-DebugStreamOutput g_Dso;
+DXDebugStreamOutput g_Dso;
 using namespace DirectX;
 
-DebugStreamOutput::DebugStreamOutput(void)
+DXDebugStreamOutput::DXDebugStreamOutput(void)
 {
 	g_pGeometryShader = NULL;
 	g_OutputBuffer = NULL;
@@ -34,11 +34,11 @@ DebugStreamOutput::DebugStreamOutput(void)
 	g_IsEnabled = false;
 }
 
-DebugStreamOutput::~DebugStreamOutput(void)
+DXDebugStreamOutput::~DXDebugStreamOutput(void)
 {
 }
 
-HRESULT DebugStreamOutput::Create( ID3D11Device1* pd3dDevice )
+HRESULT DXDebugStreamOutput::Create( ID3D11Device1* pd3dDevice )
 {
 	HRESULT hr = S_OK;
 	
@@ -115,7 +115,7 @@ HRESULT DebugStreamOutput::Create( ID3D11Device1* pd3dDevice )
 	return hr;
 }
 
-void DebugStreamOutput::Destroy()
+void DXDebugStreamOutput::Destroy()
 {
 	//SAFE_RELEASE( g_pGeometryShader );
 	for (UINT i = 0; i < g_NumBuffers; i++) {
@@ -131,7 +131,7 @@ void DebugStreamOutput::Destroy()
 }
 
 
-void DebugStreamOutput::BindBuffer( ID3D11DeviceContext1* pd3dDeviceContext, UINT targetBuffer )
+void DXDebugStreamOutput::BindBuffer( ID3D11DeviceContext1* pd3dDeviceContext, UINT targetBuffer )
 {
 	assert(targetBuffer < g_NumBuffers);
 	UINT offset[1] = {0};
@@ -142,7 +142,7 @@ void DebugStreamOutput::BindBuffer( ID3D11DeviceContext1* pd3dDeviceContext, UIN
 
 }
 
-void DebugStreamOutput::UnbindBuffer( ID3D11DeviceContext1* pd3dDeviceContext )
+void DXDebugStreamOutput::UnbindBuffer( ID3D11DeviceContext1* pd3dDeviceContext )
 {
 	ID3D11Buffer *nullBuffer[1] = {NULL};
 	UINT offset[1] = {0};
@@ -151,7 +151,7 @@ void DebugStreamOutput::UnbindBuffer( ID3D11DeviceContext1* pd3dDeviceContext )
 }
 
 
-void DebugStreamOutput::BufferDataToCPU( ID3D11DeviceContext1* pd3dDeviceContext, UINT targetBuffer )
+void DXDebugStreamOutput::BufferDataToCPU( ID3D11DeviceContext1* pd3dDeviceContext, UINT targetBuffer )
 {
 	assert(targetBuffer < g_NumBuffers);
 	
@@ -203,7 +203,7 @@ void DebugStreamOutput::BufferDataToCPU( ID3D11DeviceContext1* pd3dDeviceContext
 
 
 
-bool DebugStreamOutput::CheckBitwise( streamStruct* data0, streamStruct* data1, UINT len )
+bool DXDebugStreamOutput::CheckBitwise( streamStruct* data0, streamStruct* data1, UINT len )
 {
 	float eps = 0.00001f;
 	bool isIdentical = true;
@@ -238,7 +238,7 @@ bool DebugStreamOutput::CheckBitwise( streamStruct* data0, streamStruct* data1, 
 	return isIdentical;
 }
 
-bool DebugStreamOutput::nearlyEqual( streamStruct &a, streamStruct &b, float eps )
+bool DXDebugStreamOutput::nearlyEqual( streamStruct &a, streamStruct &b, float eps )
 {
 	if (abs(a.position.x - b.position.x) > eps)	return false;
 	if (abs(a.position.y - b.position.y) > eps)	return false;
@@ -256,32 +256,32 @@ bool DebugStreamOutput::nearlyEqual( streamStruct &a, streamStruct &b, float eps
 
 }
 
-bool DebugStreamOutput::CompareTwoBuffers( UINT buffer0, UINT buffer1 )
+bool DXDebugStreamOutput::CompareTwoBuffers( UINT buffer0, UINT buffer1 )
 {
 	assert(buffer0 < g_NumBuffers && buffer1 < g_NumBuffers);
 	return CheckBitwise(g_CPUBuffers[buffer0], g_CPUBuffers[buffer1], g_NumCPUBufferElements);
 }
 
-void DebugStreamOutput::ResetBufferCounter()
+void DXDebugStreamOutput::ResetBufferCounter()
 {
 	g_CurrBufferCounter = 0;
 }
 
-void DebugStreamOutput::SetEnable( bool e )
+void DXDebugStreamOutput::SetEnable( bool e )
 {
 	g_IsEnabled = e;
 }
 
 
 
-void DebugStreamOutput::AutomaticBind( ID3D11DeviceContext1* pd3dDeviceContext )
+void DXDebugStreamOutput::AutomaticBind( ID3D11DeviceContext1* pd3dDeviceContext )
 {
 	if (!g_IsEnabled)	return;
 	BindBuffer(pd3dDeviceContext, g_CurrBufferCounter);
 
 }
 
-void DebugStreamOutput::AutomaticUnbind( ID3D11DeviceContext1* pd3dDeviceContext )
+void DXDebugStreamOutput::AutomaticUnbind( ID3D11DeviceContext1* pd3dDeviceContext )
 {
 	if (!g_IsEnabled)	return;
 	UnbindBuffer(pd3dDeviceContext);
@@ -289,7 +289,7 @@ void DebugStreamOutput::AutomaticUnbind( ID3D11DeviceContext1* pd3dDeviceContext
 	g_CurrBufferCounter++;
 }
 
-void DebugStreamOutput::AutomaticCompare()
+void DXDebugStreamOutput::AutomaticCompare()
 {
 	if (!g_IsEnabled)	return;
 
@@ -301,7 +301,7 @@ void DebugStreamOutput::AutomaticCompare()
 	ResetBufferCounter();
 }
 
-bool DebugStreamOutput::IsEnabled()
+bool DXDebugStreamOutput::IsEnabled()
 {
 	return g_IsEnabled;
 }

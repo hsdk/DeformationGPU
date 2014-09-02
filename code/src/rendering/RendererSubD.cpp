@@ -289,8 +289,8 @@ HRESULT RendererSubD::Create( ID3D11Device1* pd3dDevice )
 	HRESULT hr = S_OK;
 
 	// constant buffers
-	DXUTCreateBuffer(pd3dDevice, D3D11_BIND_CONSTANT_BUFFER, sizeof(CBOSDTessellation), D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, _pcbTessellation);
-	DXUTCreateBuffer(pd3dDevice, D3D11_BIND_CONSTANT_BUFFER, sizeof(CBOSDConfig)		, D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, _pcbConfig);
+	DXCreateBuffer(pd3dDevice, D3D11_BIND_CONSTANT_BUFFER, sizeof(CBOSDTessellation), D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, _pcbTessellation);
+	DXCreateBuffer(pd3dDevice, D3D11_BIND_CONSTANT_BUFFER, sizeof(CBOSDConfig)		, D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, _pcbConfig);
 
 	// sampler for fast ptex lookup
 	D3D11_SAMPLER_DESC samlerDesc = 

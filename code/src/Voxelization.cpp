@@ -136,7 +136,7 @@ HRESULT VoxelizationRenderer::Create(ID3D11Device1* pd3dDevice)
 		myData[i] = 0;
 	}
 
-	DXUTCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE, DataSize*4, 0, D3D11_USAGE_IMMUTABLE,  m_emptyVoxelGridBUF, &myData[0]);
+	DXCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE, DataSize*4, 0, D3D11_USAGE_IMMUTABLE,  m_emptyVoxelGridBUF, &myData[0]);
 	DXUT_SetDebugName(m_emptyVoxelGridBUF,"m_emptyVoxelGridBUF");
 	SAFE_DELETE_ARRAY(myData);
 

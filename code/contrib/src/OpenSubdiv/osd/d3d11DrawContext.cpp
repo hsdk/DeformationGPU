@@ -127,13 +127,13 @@ OsdD3D11DrawContext::create(FarPatchTables const *patchTables,
 	//
     //pd3d11DeviceContext->Unmap(patchIndexBuffer, 0);
 	HRESULT hr;
-	hr=DXUTCreateBuffer(pd3d11Device, D3D11_BIND_INDEX_BUFFER, totalPatchIndices*sizeof(int), 0, D3D11_USAGE_IMMUTABLE, patchIndexBuffer, (void*)&ptables[0], 0, sizeof(int));
+	hr=DXCreateBuffer(pd3d11Device, D3D11_BIND_INDEX_BUFFER, totalPatchIndices*sizeof(int), 0, D3D11_USAGE_IMMUTABLE, patchIndexBuffer, (void*)&ptables[0], 0, sizeof(int));
 	if (FAILED(hr)) 
 		return false;	
 	
 	{
 		// patch index buffer SRV for culling, deformation,... SRV bindable, do not use bind index buffer and bind srvs as it is much slower in combination
-		hr=DXUTCreateBuffer(pd3d11Device, D3D11_BIND_SHADER_RESOURCE, totalPatchIndices*sizeof(int), 0, D3D11_USAGE_IMMUTABLE, patchIndexBufferBUF, (void*)&ptables[0], 0, sizeof(int));
+		hr=DXCreateBuffer(pd3d11Device, D3D11_BIND_SHADER_RESOURCE, totalPatchIndices*sizeof(int), 0, D3D11_USAGE_IMMUTABLE, patchIndexBufferBUF, (void*)&ptables[0], 0, sizeof(int));
 		if (FAILED(hr)) {
 			return false;
 		}
@@ -151,13 +151,14 @@ OsdD3D11DrawContext::create(FarPatchTables const *patchTables,
 	}
 
     // create patch param buffer
-    bd.ByteWidth = totalPatches * sizeof(FarPatchParam);
-    bd.Usage = D3D11_USAGE_DYNAMIC;
-    bd.BindFlags = D3D11_BIND_SHADER_RESOURCE;
-    bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-    bd.MiscFlags = 0;
-    bd.StructureByteStride = sizeof(unsigned int);
-    hr = pd3d11Device->CreateBuffer(&bd, NULL, &ptexCoordinateBuffer);
+    //bd.ByteWidth = totalPatches * sizeof(FarPatchParam);
+    //bd.Usage = D3D11_USAGE_DYNAMIC;
+    //bd.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+    //bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+    //bd.MiscFlags = 0;
+    //bd.StructureByteStride = sizeof(unsigned int);
+    //hr = pd3d11Device->CreateBuffer(&bd, NULL, &ptexCoordinateBuffer);
+	V(DXCreateBuffer(pd3d11Device, D3D11_BIND_SHADER_RESOURCE, totalPatches * sizeof(FarPatchParam), D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, ptexCoordinateBuffer, nullptr, 0, sizeof(unsigned int)));
     if (FAILED(hr)) {
         return false;
     }
@@ -250,7 +251,7 @@ OsdD3D11DrawContext::create(FarPatchTables const *patchTables,
 	if(requireFVarData && !fvarTables.GetAllData().empty())
 	{
 		//DXUTCreateBuffer(pd3d11Device, D3D11_BIND_SHADER_RESOURCE, fvarTables.size() * sizeof(float),0, D3D11_USAGE_IMMUTABLE,fvarDataBuffer,(void*)&fvarTables[0],0,sizeof(float));
-		DXUTCreateBuffer(pd3d11Device, D3D11_BIND_SHADER_RESOURCE, fvarTables.GetAllData().size() * sizeof(float),0, D3D11_USAGE_IMMUTABLE,fvarDataBuffer,(void*)&fvarTables.GetAllData()[0],0,sizeof(float));
+		DXCreateBuffer(pd3d11Device, D3D11_BIND_SHADER_RESOURCE, static_cast<uint32_t>(fvarTables.GetAllData().size() * sizeof(float)),0, D3D11_USAGE_IMMUTABLE,fvarDataBuffer,(void*)&fvarTables.GetAllData()[0],0,sizeof(float));
 
 		D3D11_SHADER_RESOURCE_VIEW_DESC srvd;
 		ZeroMemory(&srvd, sizeof(srvd));

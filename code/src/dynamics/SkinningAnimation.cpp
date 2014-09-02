@@ -376,10 +376,10 @@ HRESULT SkinningMeshAnimationManager::setupBuffers()
 	}
 	HRESULT hr;
 	// weights & boneIDs (MAKE D3D11_USAGE_IMMUTABLE)
-	V_RETURN(DXUTCreateBuffer(DXUTGetD3D11Device(),	 D3D11_BIND_SHADER_RESOURCE, (UINT)m_boneData.size() * sizeof(XMUINT4), 0,	D3D11_USAGE_DEFAULT, g_pBoneIDBuffer, &GetBoneIDsRef()[0],	0, sizeof(XMINT4)));
+	V_RETURN(DXCreateBuffer(DXUTGetD3D11Device(),	 D3D11_BIND_SHADER_RESOURCE, (UINT)m_boneData.size() * sizeof(XMUINT4), 0,	D3D11_USAGE_DEFAULT, g_pBoneIDBuffer, &GetBoneIDsRef()[0],	0, sizeof(XMINT4)));
 	DXUT_SetDebugName(g_pBoneIDBuffer,"g_pBoneIDBuffer2");
 
-	V_RETURN(DXUTCreateBuffer(DXUTGetD3D11Device(),	 D3D11_BIND_SHADER_RESOURCE, (UINT)m_boneData.size() * sizeof(XMFLOAT4A), 0, D3D11_USAGE_DEFAULT,g_pBoneWeightBuffer, &GetBoneWeightsRef()[0], 0,	sizeof(XMFLOAT4A)));
+	V_RETURN(DXCreateBuffer(DXUTGetD3D11Device(),	 D3D11_BIND_SHADER_RESOURCE, (UINT)m_boneData.size() * sizeof(XMFLOAT4A), 0, D3D11_USAGE_DEFAULT,g_pBoneWeightBuffer, &GetBoneWeightsRef()[0], 0,	sizeof(XMFLOAT4A)));
 	DXUT_SetDebugName(g_pBoneWeightBuffer,"g_pBoneWeightBuffer2");
 
 	D3D11_SHADER_RESOURCE_VIEW_DESC SRVDesc;
@@ -449,12 +449,12 @@ HRESULT SkinningAnimation::Create( ID3D11Device1* pd3dDevice )
 	s_minMaxBlockCS		= g_shaderManager.AddComputeShader(L"shader/SkinningMinMaxBlockCS.hlsl",	 "SkinningCS", "cs_5_0", &pBlob); SAFE_RELEASE(pBlob);
 	s_minMaxCS			= g_shaderManager.AddComputeShader(L"shader/SkinningMinMaxCS.hlsl",			 "SkinningCS", "cs_5_0", &pBlob); SAFE_RELEASE(pBlob);
 
-	V_RETURN(DXUTCreateBuffer( pd3dDevice, D3D11_BIND_CONSTANT_BUFFER, sizeof(CB_SKINNING_AND_OBB), D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, m_cbSkinning));
+	V_RETURN(DXCreateBuffer( pd3dDevice, D3D11_BIND_CONSTANT_BUFFER, sizeof(CB_SKINNING_AND_OBB), D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, m_cbSkinning));
 
 	// Create temporary buffers for the scan operations
 	{
 		{ // Buffers for the centroid computation
-			V_RETURN(DXUTCreateBuffer(DXUTGetD3D11Device(),	D3D11_BIND_UNORDERED_ACCESS | D3D11_BIND_SHADER_RESOURCE,
+			V_RETURN(DXCreateBuffer(DXUTGetD3D11Device(),	D3D11_BIND_UNORDERED_ACCESS | D3D11_BIND_SHADER_RESOURCE,
 									 SKINNING_NUM_MAX_VERTICES * sizeof(XMFLOAT4A), 0,	D3D11_USAGE_DEFAULT,
 									 m_pCentroidTmpBuffer, NULL, 0, sizeof(XMFLOAT4A)));
 			DXUT_SetDebugName(m_pCentroidTmpBuffer, "m_pCentroidTmpBuffer");
@@ -477,7 +477,7 @@ HRESULT SkinningAnimation::Create( ID3D11Device1* pd3dDevice )
 			V_RETURN( pd3dDevice->CreateUnorderedAccessView(m_pCentroidTmpBuffer, &DescUAV, &m_pCentroidTmpBufferUAV4Components ));	
 			DXUT_SetDebugName(m_pCentroidTmpBufferUAV4Components, "m_pCentroidTmpBufferUAV4Components");
 
-			V_RETURN(DXUTCreateBuffer(DXUTGetD3D11Device(),	D3D11_BIND_UNORDERED_ACCESS | D3D11_BIND_SHADER_RESOURCE,
+			V_RETURN(DXCreateBuffer(DXUTGetD3D11Device(),	D3D11_BIND_UNORDERED_ACCESS | D3D11_BIND_SHADER_RESOURCE,
 									 8 * sizeof(XMFLOAT4A), 0,	D3D11_USAGE_DEFAULT,
 									 m_pCentroidBuffer, NULL, 0, sizeof(XMFLOAT4A)));
 			DXUT_SetDebugName(m_pCentroidBuffer, "m_pCentroidBuffer");
@@ -501,7 +501,7 @@ HRESULT SkinningAnimation::Create( ID3D11Device1* pd3dDevice )
 
 		{ // Covariance Matrix buffers
 			// DIAGONAL
-			V_RETURN(DXUTCreateBuffer(DXUTGetD3D11Device(),	D3D11_BIND_UNORDERED_ACCESS | D3D11_BIND_SHADER_RESOURCE,
+			V_RETURN(DXCreateBuffer(DXUTGetD3D11Device(),	D3D11_BIND_UNORDERED_ACCESS | D3D11_BIND_SHADER_RESOURCE,
 									 SKINNING_NUM_MAX_VERTICES * sizeof(XMFLOAT4A), 0,	D3D11_USAGE_DEFAULT,
 									 m_pDTmpBuffer, NULL, 0, sizeof(XMFLOAT4A)));
 			DXUT_SetDebugName(m_pDTmpBuffer, "m_pDTmpBuffer");
@@ -525,7 +525,7 @@ HRESULT SkinningAnimation::Create( ID3D11Device1* pd3dDevice )
 			DXUT_SetDebugName(m_pDTmpUAV4Components, "m_pDTmpUAV4Components");
 
 			// LOWER
-			V_RETURN(DXUTCreateBuffer(DXUTGetD3D11Device(),	D3D11_BIND_UNORDERED_ACCESS | D3D11_BIND_SHADER_RESOURCE,
+			V_RETURN(DXCreateBuffer(DXUTGetD3D11Device(),	D3D11_BIND_UNORDERED_ACCESS | D3D11_BIND_SHADER_RESOURCE,
 									 SKINNING_NUM_MAX_VERTICES * sizeof(XMFLOAT4A), 0,	D3D11_USAGE_DEFAULT,
 									 m_pLTmpBuffer, NULL, 0, sizeof(XMFLOAT4A)));
 			DXUT_SetDebugName(m_pLTmpBuffer, "m_pLTmpBuffer");
@@ -547,7 +547,7 @@ HRESULT SkinningAnimation::Create( ID3D11Device1* pd3dDevice )
 			DXUT_SetDebugName(m_pLTmpUAV4Components, "m_pLTmpUAV4Components");
 
 			// ONB
-			V_RETURN(DXUTCreateBuffer(DXUTGetD3D11Device(),	D3D11_BIND_UNORDERED_ACCESS | D3D11_BIND_SHADER_RESOURCE,
+			V_RETURN(DXCreateBuffer(DXUTGetD3D11Device(),	D3D11_BIND_UNORDERED_ACCESS | D3D11_BIND_SHADER_RESOURCE,
 									 8 * sizeof(XMFLOAT4A), 0,	D3D11_USAGE_DEFAULT,
 									 m_pONBBuffer, NULL, 0, sizeof(XMFLOAT4A)));
 			DXUT_SetDebugName(m_pONBBuffer, "m_pONBBuffer");
@@ -571,7 +571,7 @@ HRESULT SkinningAnimation::Create( ID3D11Device1* pd3dDevice )
 
 		{ // Min & Max tmp buffers
 			// Min
-			V_RETURN(DXUTCreateBuffer(DXUTGetD3D11Device(),	D3D11_BIND_UNORDERED_ACCESS | D3D11_BIND_SHADER_RESOURCE,
+			V_RETURN(DXCreateBuffer(DXUTGetD3D11Device(),	D3D11_BIND_UNORDERED_ACCESS | D3D11_BIND_SHADER_RESOURCE,
 									 SKINNING_NUM_MAX_VERTICES * sizeof(XMFLOAT4A), 0,	D3D11_USAGE_DEFAULT,
 									 m_pMinTmpBuffer, NULL, 0, sizeof(XMFLOAT4A)));
 			DXUT_SetDebugName(m_pMinTmpBuffer, "m_pMinTmpBuffer");
@@ -595,7 +595,7 @@ HRESULT SkinningAnimation::Create( ID3D11Device1* pd3dDevice )
 			DXUT_SetDebugName(m_pMinTmpUAV4Components, "m_pMinTmpUAV4Components");
 
 			// Max
-			V_RETURN(DXUTCreateBuffer(DXUTGetD3D11Device(),	D3D11_BIND_UNORDERED_ACCESS | D3D11_BIND_SHADER_RESOURCE,
+			V_RETURN(DXCreateBuffer(DXUTGetD3D11Device(),	D3D11_BIND_UNORDERED_ACCESS | D3D11_BIND_SHADER_RESOURCE,
 									 SKINNING_NUM_MAX_VERTICES * sizeof(XMFLOAT4A), 0,	D3D11_USAGE_DEFAULT,
 									 m_pMaxTmpBuffer, NULL, 0, sizeof(XMFLOAT4A)));
 			DXUT_SetDebugName(m_pMaxTmpBuffer, "m_pMaxTmpBuffer");

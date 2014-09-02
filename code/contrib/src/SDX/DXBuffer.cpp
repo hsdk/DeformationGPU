@@ -1,9 +1,9 @@
 #include "DXBuffer.h"
 
 #ifdef DIRECTX_11_1_ENABLED
-HRESULT WINAPI DXUTCreateBuffer(ID3D11Device1* pd3dDevice, UINT bindFlags, UINT byteWidth, UINT cpuAccessFlag, D3D11_USAGE usage, ID3D11Buffer* &pBuffer, void* pData, UINT misc_flags, UINT stride)
+HRESULT WINAPI DXCreateBuffer(ID3D11Device1* pd3dDevice, UINT bindFlags, UINT byteWidth, UINT cpuAccessFlag, D3D11_USAGE usage, ID3D11Buffer* &pBuffer, void* pData, UINT misc_flags, UINT stride)
 #else
-HRESULT WINAPI DXUTCreateBuffer(ID3D11Device* pd3dDevice, UINT bindFlags, UINT byteWidth, UINT cpuAccessFlag, D3D11_USAGE usage, ID3D11Buffer* &pBuffer, void* pData, UINT misc_flags, UINT stride)
+HRESULT WINAPI DXCreateBuffer(ID3D11Device* pd3dDevice, UINT bindFlags, UINT byteWidth, UINT cpuAccessFlag, D3D11_USAGE usage, ID3D11Buffer* &pBuffer, void* pData, UINT misc_flags, UINT stride)
 #endif
 {
 	HRESULT hr = S_OK;

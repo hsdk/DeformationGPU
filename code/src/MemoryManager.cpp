@@ -172,11 +172,11 @@ HRESULT MemoryManager::Create( ID3D11Device1* pd3dDevice )
 	ZeroMemory(&descUAV, sizeof(descUAV));
 	descUAV.ViewDimension =  D3D11_UAV_DIMENSION_BUFFER;
 
-	V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_CONSTANT_BUFFER, sizeof(CBMemoryManageTask),
+	V_RETURN(DXCreateBuffer(pd3dDevice, D3D11_BIND_CONSTANT_BUFFER, sizeof(CBMemoryManageTask),
 							  D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, m_cbMemManageTask));
 
 	
-	V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_CONSTANT_BUFFER, sizeof(CB_ManageTiles), D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, m_tilesInfoCB ));
+	V_RETURN(DXCreateBuffer(pd3dDevice, D3D11_BIND_CONSTANT_BUFFER, sizeof(CB_ManageTiles), D3D11_CPU_ACCESS_WRITE, D3D11_USAGE_DYNAMIC, m_tilesInfoCB ));
 
 
 	FreeMemoryTableState initMemState;
@@ -187,9 +187,9 @@ HRESULT MemoryManager::Create( ID3D11Device1* pd3dDevice )
 	initMemState.maxLocTileColor = 0;
 	initMemState.maxLocTileDisplacement = 0;
 	
-	V_RETURN(DXUTCreateBuffer(pd3dDevice, 0, sizeof(FreeMemoryTableState), D3D11_CPU_ACCESS_READ,  D3D11_USAGE_STAGING, m_memTableStateStagingBUF, &initMemState.curLocTileDisplacement)); 
+	V_RETURN(DXCreateBuffer(pd3dDevice, 0, sizeof(FreeMemoryTableState), D3D11_CPU_ACCESS_READ,  D3D11_USAGE_STAGING, m_memTableStateStagingBUF, &initMemState.curLocTileDisplacement)); 
 
-	V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, sizeof(FreeMemoryTableState),  0, D3D11_USAGE_DEFAULT, m_memTableStateBUF, &initMemState.curLocTileDisplacement,
+	V_RETURN(DXCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, sizeof(FreeMemoryTableState),  0, D3D11_USAGE_DEFAULT, m_memTableStateBUF, &initMemState.curLocTileDisplacement,
 							  0, sizeof(FreeMemoryTableState)));
 
 
@@ -241,8 +241,8 @@ HRESULT MemoryManager::Create( ID3D11Device1* pd3dDevice )
 	descUAV.Buffer.NumElements	= numElements;
 	descUAV.Buffer.Flags = 0;
 	UINT byteSize	  = numElements * scanElemSize;
-	V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, byteSize, 0, D3D11_USAGE_DEFAULT, m_scanBucketsBUF)); 
-	V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, byteSize, 0, D3D11_USAGE_DEFAULT, m_scanResultBUF)); 
+	V_RETURN(DXCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, byteSize, 0, D3D11_USAGE_DEFAULT, m_scanBucketsBUF)); 
+	V_RETURN(DXCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, byteSize, 0, D3D11_USAGE_DEFAULT, m_scanResultBUF)); 
 
 	V_RETURN(pd3dDevice->CreateShaderResourceView(m_scanBucketsBUF,		&descSRV, &m_scanBucketsSRV));
 	V_RETURN(pd3dDevice->CreateShaderResourceView(m_scanResultBUF,		&descSRV, &m_scanResultSRV));		
@@ -256,7 +256,7 @@ HRESULT MemoryManager::Create( ID3D11Device1* pd3dDevice )
 	byteSize= numElements * scanElemSize;
 	descSRV.Buffer.NumElements = numElements;		
 	descUAV.Buffer.NumElements = numElements;		
-	V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, byteSize, 0, D3D11_USAGE_DEFAULT, m_scanBucketResultsBUF)); 						
+	V_RETURN(DXCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, byteSize, 0, D3D11_USAGE_DEFAULT, m_scanBucketResultsBUF)); 						
 	V_RETURN(pd3dDevice->CreateShaderResourceView(m_scanBucketResultsBUF,		&descSRV, &m_scanBucketResultsSRV));		
 	V_RETURN(pd3dDevice->CreateUnorderedAccessView(m_scanBucketResultsBUF,	&descUAV, &m_scanBucketResultsUAV));
 
@@ -266,7 +266,7 @@ HRESULT MemoryManager::Create( ID3D11Device1* pd3dDevice )
 	descSRV.Buffer.NumElements = numElements;		
 	descUAV.Buffer.NumElements = numElements;
 	descUAV.Buffer.Flags = 0;
-	V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, byteSize, 0, D3D11_USAGE_DEFAULT, m_scanBucketBlockResultsBUF)); 						
+	V_RETURN(DXCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, byteSize, 0, D3D11_USAGE_DEFAULT, m_scanBucketBlockResultsBUF)); 						
 	V_RETURN(pd3dDevice->CreateShaderResourceView(m_scanBucketBlockResultsBUF,	&descSRV, &m_scanBucketBlockResultsSRV));		
 	V_RETURN(pd3dDevice->CreateUnorderedAccessView(m_scanBucketBlockResultsBUF,	&descUAV, &m_scanBucketBlockResultsUAV));
 
@@ -276,9 +276,9 @@ HRESULT MemoryManager::Create( ID3D11Device1* pd3dDevice )
 	DXGI_FORMAT compactedBufferFormat = DXGI_FORMAT_R32_UINT;
 
 	// compacted allocate,deallocate,active buffer
-	V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, numElements*sizeof(UINT), 0, D3D11_USAGE_DEFAULT, m_compactedAllocateBUF));		
-	V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, numElements*sizeof(UINT), 0, D3D11_USAGE_DEFAULT, m_compactedDeallocateBUF));
-	V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, numElements*sizeof(UINT), 0, D3D11_USAGE_DEFAULT, m_compactedActiveBUF));
+	V_RETURN(DXCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, numElements*sizeof(UINT), 0, D3D11_USAGE_DEFAULT, m_compactedAllocateBUF));		
+	V_RETURN(DXCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, numElements*sizeof(UINT), 0, D3D11_USAGE_DEFAULT, m_compactedDeallocateBUF));
+	V_RETURN(DXCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, numElements*sizeof(UINT), 0, D3D11_USAGE_DEFAULT, m_compactedActiveBUF));
 
 	descSRV.Format				= compactedBufferFormat;
 	descSRV.Buffer.NumElements	= numElements;
@@ -295,7 +295,7 @@ HRESULT MemoryManager::Create( ID3D11Device1* pd3dDevice )
 
 	// DISPATCH INDIRECT BUFFERS
 	// dispatch indirect, 3 uint4: 0 = alloc, 1 = dealloc, 2 = dowork (e.g. sampling/painting), use offset in buffer for starting indirect dispatches
-	V_RETURN(DXUTCreateBuffer( DXUTGetD3D11Device(), D3D11_BIND_UNORDERED_ACCESS , 3 * sizeof(XMUINT4), 0, D3D11_USAGE_DEFAULT, m_dispatchIndirectBUF, NULL, D3D11_RESOURCE_MISC_DRAWINDIRECT_ARGS));	
+	V_RETURN(DXCreateBuffer( DXUTGetD3D11Device(), D3D11_BIND_UNORDERED_ACCESS , 3 * sizeof(XMUINT4), 0, D3D11_USAGE_DEFAULT, m_dispatchIndirectBUF, NULL, D3D11_RESOURCE_MISC_DRAWINDIRECT_ARGS));	
 
 	descUAV.Format				= DXGI_FORMAT_R32G32B32A32_UINT;	
 	descUAV.Buffer.NumElements	= 3;
@@ -469,7 +469,7 @@ JUMP_STOP_ASSIGN_TILES:
 
 	HRESULT hr;
 	// create mem table gpu buffer 	
-	V_RETURN(DXUTCreateBuffer(pd3dDevice,D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, numTiles*3*sizeof(USHORT), 0, D3D11_USAGE_DEFAULT, layoutBUF, &tileLocTable[0]));
+	V_RETURN(DXCreateBuffer(pd3dDevice,D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, numTiles*3*sizeof(USHORT), 0, D3D11_USAGE_DEFAULT, layoutBUF, &tileLocTable[0]));
 
 	DXGI_FORMAT memTableFormat =  DXGI_FORMAT_R16_UINT;
 	UINT		numTableElements = numTiles*3;//sizeof(TileTableEntry)/sizeof(USHORT); // table entry has ushorts
@@ -553,7 +553,7 @@ HRESULT MemoryManager::CreateLocalTileInfo( ID3D11Device1* pd3dDevice, UINT numT
 			<< "width: " << (1<<((wh >> 8)&0xf)) <<  ", height: " << (1 << (wh & 0xf)) << std::endl;
 	}
 #endif
-	V_RETURN(DXUTCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, numTiles * 4 * sizeof(USHORT), 0,
+	V_RETURN(DXCreateBuffer(pd3dDevice, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS, numTiles * 4 * sizeof(USHORT), 0,
 		D3D11_USAGE_DEFAULT, tileInfoBUF, &tileInfo[0]));// , D3D11_RESOURCE_MISC_BUFFER_STRUCTURED, sizeof(UINT16)));
 
 	int numElements = numTiles * 4;
@@ -1183,7 +1183,7 @@ HRESULT MemoryManager::PrintTileInfo( ID3D11DeviceContext1* pd3dImmediateContext
 {
 	HRESULT hr;
 	ID3D11Buffer* tmpStagingBUF = NULL;
-	V_RETURN(DXUTCreateBuffer(DXUTGetD3D11Device(), 0, numTiles * 6 * sizeof(USHORT), D3D11_CPU_ACCESS_READ,  D3D11_USAGE_STAGING, tmpStagingBUF));
+	V_RETURN(DXCreateBuffer(DXUTGetD3D11Device(), 0, numTiles * 6 * sizeof(USHORT), D3D11_CPU_ACCESS_READ,  D3D11_USAGE_STAGING, tmpStagingBUF));
 
 	g_app.WaitForGPU();
 	DXUTGetD3D11DeviceContext()->CopyResource(tmpStagingBUF, tileInfoBUF);
@@ -1250,7 +1250,7 @@ HRESULT MemoryManager::UpdateMemTableStates( UINT newMaxNumDiplacementTiles, UIN
 
 	// create new buffer for updating state on gpu
 	ID3D11Buffer* tmpStateBuffer = NULL;
-	V_RETURN(DXUTCreateBuffer(DXUTGetD3D11Device(), D3D11_BIND_SHADER_RESOURCE, sizeof(FreeMemoryTableState), 0, D3D11_USAGE_IMMUTABLE, tmpStateBuffer, &tableState.curLocTileDisplacement));
+	V_RETURN(DXCreateBuffer(DXUTGetD3D11Device(), D3D11_BIND_SHADER_RESOURCE, sizeof(FreeMemoryTableState), 0, D3D11_USAGE_IMMUTABLE, tmpStateBuffer, &tableState.curLocTileDisplacement));
 	DXUTGetD3D11DeviceContext()->CopyResource(m_memTableStateBUF, tmpStateBuffer);
 	
 	g_app.WaitForGPU();
@@ -1483,7 +1483,7 @@ HRESULT MemoryManager::ScanInternalOSD( ID3D11DeviceContext1* pd3dImmediateConte
 	{
 		// enable writing result in shader
 		ID3D11Buffer* stagingBUF;
-		DXUTCreateBuffer(DXUTGetD3D11Device(), 0, sizeof(UINT),  D3D11_CPU_ACCESS_READ, D3D11_USAGE_STAGING, stagingBUF );
+		DXCreateBuffer(DXUTGetD3D11Device(), 0, sizeof(UINT),  D3D11_CPU_ACCESS_READ, D3D11_USAGE_STAGING, stagingBUF );
 
 		D3D11_BOX sourceRegion;
 		sourceRegion.left = 4*(numTiles-1);
@@ -1561,7 +1561,7 @@ HRESULT MemoryManager::AllocInternal(ID3D11DeviceContext1* pd3dImmediateContext,
 	{
 		// enable writing result in shader
 		ID3D11Buffer* stagingBUF;
-		DXUTCreateBuffer(DXUTGetD3D11Device(), 0, sizeof(UINT), D3D11_CPU_ACCESS_READ, D3D11_USAGE_STAGING, stagingBUF);
+		DXCreateBuffer(DXUTGetD3D11Device(), 0, sizeof(UINT), D3D11_CPU_ACCESS_READ, D3D11_USAGE_STAGING, stagingBUF);
 
 		D3D11_BOX sourceRegion;
 		sourceRegion.left = 4 * (numTiles - 1);
