@@ -15,14 +15,13 @@
 
 #include "stdafx.h"
 
-#include "Deformation.h"
+#include "TileEdit.h"
 #include "MemoryManager.h"
 #include "IntersectPatches.h"
 #include "TileOverlapUpdater.h"
 
-#include "utils/MathHelpers.h"
 #include <SDX/DXShaderManager.h>
-
+#include "utils/MathHelpers.h"
 #include "scene/DXSubDModel.h"
 #include "scene/DXModel.h"
 #include "scene/ModelInstance.h"
@@ -38,11 +37,11 @@ using namespace DirectX;
 #define DISPLACEMENT_DISPATCH_TILE_SIZE 16
 #define WORK_GROUP_SIZE_EXTRAORDINARY 128
 
-Deformation					g_deformation;
+TileEdit					g_deformation;
 
 EffectRegistryPaintDeform g_paintDeformEffectRegistry;
 
-Deformation::Deformation()
+TileEdit::TileEdit()
 {		
 	m_intersectModelCB = NULL;
 	m_VoxelGridCB = NULL;
@@ -52,12 +51,12 @@ Deformation::Deformation()
 	m_samplerNearest = NULL;
 }
 
-Deformation::~Deformation()
+TileEdit::~TileEdit()
 {
 	Destroy();
 }
 
-HRESULT Deformation::Create( ID3D11Device1* pd3dDevice )
+HRESULT TileEdit::Create( ID3D11Device1* pd3dDevice )
 {
 	HRESULT hr = S_OK;
 
@@ -94,7 +93,7 @@ HRESULT Deformation::Create( ID3D11Device1* pd3dDevice )
 	return hr;
 }
 
-void Deformation::Destroy()
+void TileEdit::Destroy()
 {
 	SAFE_RELEASE(m_intersectModelCB);
 	SAFE_RELEASE(m_VoxelGridCB);
@@ -108,7 +107,7 @@ void Deformation::Destroy()
 	g_paintDeformEffectRegistry.Reset();
 }
 
-void Deformation::SetVoxelGridCB(ID3D11DeviceContext1* pd3dImmediateContext, Voxelizable* penetratorVoxelization, ModelInstance* deformableInstance) const
+void TileEdit::SetVoxelGridCB(ID3D11DeviceContext1* pd3dImmediateContext, Voxelizable* penetratorVoxelization, ModelInstance* deformableInstance) const
 {
 	const VoxelGridDefinition& gridDef = penetratorVoxelization->GetVoxelGridDefinition();
 	//XMMATRIX mModel2World = XMMatrixIdentity(); //XMLoadFloat4x4A(&mesh->GetModelMatrix());	// checkme set model matrix from bullet?	
@@ -133,7 +132,7 @@ void Deformation::SetVoxelGridCB(ID3D11DeviceContext1* pd3dImmediateContext, Vox
 	DXUTGetD3D11DeviceContext()->CSSetConstantBuffers( CB_LOC::VOXELGRID, 1, &m_VoxelGridCB );
 }
 
-HRESULT Deformation::Apply(ID3D11DeviceContext1 *pd3dImmediateContext, ModelInstance* targetInstance, IntersectGPU* intersect, uint32_t batchIdx, ModelInstance* penetratorVoxelization)
+HRESULT TileEdit::Apply(ID3D11DeviceContext1 *pd3dImmediateContext, ModelInstance* targetInstance, IntersectGPU* intersect, uint32_t batchIdx, ModelInstance* penetratorVoxelization)
 {
 	HRESULT hr = S_OK;
 
@@ -283,7 +282,7 @@ HRESULT Deformation::Apply(ID3D11DeviceContext1 *pd3dImmediateContext, ModelInst
 }
 
 
-void Deformation::BindShaders(ID3D11DeviceContext1* pd3dImmediateContext, const PaintDeformConfig effect, ModelInstance* instance, IntersectGPU* intersect, ModelInstance* penetratorVoxelization, uint32_t batchIdx)
+void TileEdit::BindShaders(ID3D11DeviceContext1* pd3dImmediateContext, const PaintDeformConfig effect, ModelInstance* instance, IntersectGPU* intersect, ModelInstance* penetratorVoxelization, uint32_t batchIdx)
 {
 	const D3D11_INPUT_ELEMENT_DESC hInElementDesc[] = { { "POSITION", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 } };
 
@@ -337,7 +336,7 @@ void Deformation::BindShaders(ID3D11DeviceContext1* pd3dImmediateContext, const 
 }
 
 
-HRESULT Deformation::VoxelDeformOSD( ID3D11DeviceContext1 *pd3dImmediateContext, ModelInstance* deformable, ModelInstance* penetratorVoxelization, IntersectGPU* intersect, uint32_t batchIdx )
+HRESULT TileEdit::VoxelDeformOSD( ID3D11DeviceContext1 *pd3dImmediateContext, ModelInstance* deformable, ModelInstance* penetratorVoxelization, IntersectGPU* intersect, uint32_t batchIdx )
 {
 	HRESULT hr = S_OK;
 	if(! deformable->IsSubD()) return hr;

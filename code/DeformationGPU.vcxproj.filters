@@ -94,9 +94,6 @@
     <ClCompile Include="src\App.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Deformation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\IntersectPatches.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -163,6 +160,9 @@
     <ClCompile Include="src\utils\Timer.cpp">
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="src\TileEdit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\dynamics\AnimationGroup.h">
@@ -179,9 +179,6 @@
     </ClInclude>
     <ClInclude Include="src\dynamics\SkinningAnimation.h">
       <Filter>Header Files\Dynamics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Deformation.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\IntersectPatches.h">
       <Filter>Header Files</Filter>
@@ -269,6 +266,9 @@
     </ClInclude>
     <ClInclude Include="src\utils\TimingLog.h">
       <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TileEdit.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

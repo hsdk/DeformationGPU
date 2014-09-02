@@ -77,10 +77,10 @@ protected:
 };
 
 
-class Deformation {
+class TileEdit {
 public:
-	Deformation();
-	~Deformation();
+	TileEdit();
+	~TileEdit();
 	
 	HRESULT Create(ID3D11Device1* pd3dDevice);
 	void Destroy();
@@ -104,5 +104,5 @@ protected:
 	ID3D11SamplerState* m_samplerNearest;
 
 };
-extern Deformation					g_deformation;
+extern TileEdit					g_deformation;
 extern EffectRegistryPaintDeform	g_paintDeformEffectRegistry;

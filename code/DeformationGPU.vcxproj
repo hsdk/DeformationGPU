@@ -224,7 +224,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\App.cpp" />
-    <ClCompile Include="src\Deformation.cpp" />
+    <ClCompile Include="src\TileEdit.cpp" />
     <ClCompile Include="src\dynamics\AnimationGroup.cpp" />
     <ClCompile Include="src\dynamics\Car.cpp" />
     <ClCompile Include="src\dynamics\Physics.cpp" />
@@ -256,7 +256,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\App.h" />
-    <ClInclude Include="src\Deformation.h" />
+    <ClInclude Include="src\TileEdit.h" />
     <ClInclude Include="src\dynamics\AnimationGroup.h" />
     <ClInclude Include="src\dynamics\Car.h" />
     <ClInclude Include="src\dynamics\Character.h" />

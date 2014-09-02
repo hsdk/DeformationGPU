@@ -25,7 +25,7 @@
 #include "rendering/RendererTri.h"
 #include "rendering/RendererSubD.h"
 
-#include "Deformation.h"
+#include "TileEdit.h"
 #include "IntersectPatches.h"
 #include "MemoryManager.h"
 #include "TileOverlapUpdater.h"
