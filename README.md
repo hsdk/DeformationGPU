@@ -16,3 +16,8 @@ Requirements:
 - Visual Studio 2013
 - Windows 8 Kit
 
+Keys:
+Space  		start physics simulation
+W,A,S,D 	control car
+
+
