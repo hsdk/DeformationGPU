@@ -788,6 +788,7 @@ g_app.g_envMapSRV = g_textureManager.AddTexture("../../media/textures/env_sky.dd
 	g_LightCamera.FrameMove( 0);
 
 	ModelLoader::Load("media/models/valley/valley.dae", g_scene);
+	//ModelLoader::Load("media/models/valley/valley2.dae", g_scene);
 	
 	//ModelLoader::Load("../../media/models/terrain7.dae", g_scene);
 	//ModelLoader::Load("../../media/models/sintel/tundra_level.dae", g_scene, 0, 0);	

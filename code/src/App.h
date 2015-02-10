@@ -33,6 +33,7 @@ public:
 		OSD_DEFORMATION_CONFIG = 6,
 		LIGHT_PROPERTIES	 =  7,
 		ANIMATE_KEYFRAME	 =  8,
+		PICKING				 =  8,
 		VOXELGRID			 =  9,
 		RAYCAST_VOXELIZATION = 10,
 		CASCADE_PROJECTION   = 10,
@@ -343,6 +344,11 @@ public:
 
 		g_envMapSRV = NULL;
 
+		g_mouseScreenPos	 = DirectX::XMFLOAT2(0, 0);
+		g_mousePrevScreenPos = DirectX::XMFLOAT2(0, 0);
+		g_mouseDirection	 = DirectX::XMFLOAT2(0, 0);
+		g_mousePrevDirection = DirectX::XMFLOAT2(0, 0);
+
 		
 	}
 	~App()
@@ -607,7 +613,12 @@ public:
 	bool		g_showAllocated;
 	bool		g_withOverlapUpdate;
 
-	unsigned int g_maxSubdivisions;
+	uint32_t	g_maxSubdivisions;
+
+	DirectX::XMFLOAT2 g_mouseScreenPos;
+	DirectX::XMFLOAT2 g_mousePrevScreenPos;
+	DirectX::XMFLOAT2 g_mouseDirection;
+	DirectX::XMFLOAT2 g_mousePrevDirection;
 
 	
 	ID3D11ShaderResourceView* g_envMapSRV;

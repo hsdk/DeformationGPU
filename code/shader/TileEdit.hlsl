@@ -104,26 +104,10 @@ void GetPatchInfo(float2 UV, uint patchDataX, inout float4 patchCoord, inout int
 
 	float2 uv = patchCoord.xy;
 	int2 p = ptexInfo.xy;                                  
-    //int lv = ptexInfo.z;                                   
     int rot = ptexInfo.w;                                  
 
-	// TODO ENABLE
-    //uv.xy = float(rot==0)*uv.xy                                     
-    //        + float(rot==1)*float2(1.0-uv.y, uv.x)                      
-    //        + float(rot==2)*float2(1.0-uv.x, 1.0-uv.y)                  
-    //        + float(rot==3)*float2(uv.y, 1.0-uv.x);                  
-	
-	//uv.xy = float2(1.0-uv.y, uv.x);
-	//if(rotation == 0) uv.xy = uv.xy;
-	//if(rotation == 1) uv.xy = float2(1.0-uv.y, uv.x);
-	//if(rotation == 2) uv.xy = float2(1.0-uv.x, 1.0-uv.y);
-	//if(rotation == 3) uv.xy = float2(uv.y, 1.0-uv.x); 
-
-	// uv.xy = float2(1.0-uv.x, 1.0-uv.y);
-	// renable again
-	// what is wrong with rotation?
 	patchCoord.xy = (uv * float2(1.0,1.0)/lv) + float2(p.x, p.y)/lv; 
-    //patchCoord.xy = (uv * float2(1.0,1.0)/lv) + float2(p.x, p.y)/lv; 
+
 }
 
 
@@ -132,7 +116,8 @@ void GetPatchInfo(float2 UV, uint patchDataX, inout float4 patchCoord, inout int
 void WriteColor(float3 color, uint faceID, float4 patchCoord, int patchLevel)
 {
 	PtexPacking ppackColor = getPtexPacking(g_TileInfoColor, faceID);
-	if(ppackColor.page == -1)		return ; // early exit if tile data is not allocated
+	if(ppackColor.page == -1)	// early exit if tile data is not allocated
+		return; 
 
 	float2 coordsColor = float2(patchCoord.x * ppackColor.tileSize + ppackColor.uOffset,
 		patchCoord.y * ppackColor.tileSize + ppackColor.vOffset);
@@ -152,8 +137,6 @@ void DebugColor(uint faceID, float4 patchCoord, int patchLevel)
 	float2 coordsColor = float2(patchCoord.x * ppackColor.tileSize + ppackColor.uOffset,
 		patchCoord.y * ppackColor.tileSize + ppackColor.vOffset);
 
-	//coordsColor -= float2(0.5, 0.5);	
-	//uint2 ucoordColor = round(coordsColor);
 	uint2 ucoordColor = coordsColor;
 
 	float4 color = float4(0.3,0.3,0.3,1);					// l0 gray
@@ -168,7 +151,7 @@ void DebugColor(uint faceID, float4 patchCoord, int patchLevel)
 	if(patchLevel == 9)		color.rgb = float3(0,0.5,0);
 	if(patchLevel == 10)	color.rgb = float3(0,0.5,0.5);
 	
-	//// write patch level 
+	// write patch level 
 	float4 c = float4(patchCoord.xy, 0, 1);
 	float2 pc = patchCoord.xy*2-1;
 	float2 pca = abs(pc);
@@ -184,15 +167,10 @@ void DebugColor(uint faceID, float4 patchCoord, int patchLevel)
 	c=color;
 	if (g_ptexFaceVisibleSRV[faceID])	
 		g_ColorUAV[int3(ucoordColor.x, ucoordColor.y, ppackColor.page)] = uint(c.x*255) | uint(c.y * 255) << 8 | uint(c.z * 255) << 16 | uint(c.w * 255) << 24;
-
-	// mark corners with colors
-	//if(idx.x == 0 && idx.y == 0)						g_ColorUAV[int3(coordsColor.x, coordsColor.y, ppackColor.page)] = float4(1,0.0,1,1); 
-	//if(idx.x == tileSize-1 && idx.y == 0)				g_ColorUAV[int3(coordsColor.x, coordsColor.y, ppackColor.page)] = float4(1,0.3,1,1);
-	//if(idx.x == 0 && idx.y == tileSize-1)				g_ColorUAV[int3(coordsColor.x, coordsColor.y, ppackColor.page)] = float4(1,0.6,1,1);	
-	//if(idx.x == tileSize-1 && idx.y == tileSize-1)	g_ColorUAV[int3(coordsColor.x, coordsColor.y, ppackColor.page)] = float4(1,1,1,1);
 }
 
-float cubicPulse(float w, float x) {
+float cubicPulse(float w, float x) 
+{
 	x = min(abs(x),w)/w;
 	return 1.0 - x*x*(3.0-2.0*x);
 }
@@ -231,26 +209,13 @@ float voronoi(float2 x)
 		d = sqrt(d);
 		
 		res +=  exp(-falloff * d);
-        //res += 1.0 / pow(d, falloff);
-		//res = min(d, res);
     }
 	return smoothstep(0.0,1.,-(1.0/falloff)*log(res));
-    //return res;//pow(1.0 / res, 1.0/(falloff*2.0));
 }
 
 float lookup(float2 x) {
-	//return 1. - voronoi(8.*x+voronoi(x*8.));	
 	return 1. - voronoi(TILE_FACTOR*x+voronoi(x*TILE_FACTOR));
 }
-
-//void main(void)
-//{
-//	vec2 uv = gl_FragCoord.xy / iResolution.xy;
-//	uv *= 2.;
-//	gl_FragColor = vec4(1.-voronoi(8.*uv+voronoi(uv*8.)*1.0-0.75));
-//}
-
-
 
 
 static const float fOneThird = 1.0f/3.0f;
@@ -288,8 +253,6 @@ void Eval(in float2 UV, out float3 WorldPos, out float3 Normal, in float3 CP[16]
 		DUCP[i] =  float3(0.0f, 0.0f, 0.0f);
 		for (int j = 0; j < 4; j++) 
 		{
-			//float3 A = CP[4*i + j].xyz;
-// CHECKME BEGIN
 #if OSD_TRANSITION_ROTATE == 1
             float3 A = CP[4*(3-j) + i].xyz;
 #elif OSD_TRANSITION_ROTATE == 2
@@ -299,7 +262,6 @@ void Eval(in float2 UV, out float3 WorldPos, out float3 Normal, in float3 CP[16]
 #else // OSD_TRANSITION_ROTATE == 0, or non-transition patch
             float3 A = CP[4*i + j].xyz;
 #endif
-// CHECKME END
 			BUCP[i] +=  A * B[j];
 			DUCP[i] +=  A * D[j];		 
 		}
@@ -320,9 +282,6 @@ void Eval(in float2 UV, out float3 WorldPos, out float3 Normal, in float3 CP[16]
 	// checkme level
 
 	Normal = normalize(cross(Tangent, BiTangent));
-
-	// do we need tangent, bitangent?
-	//OSD_COMPUTE_PTEX_COMPATIBLE_TANGENT(OSD_TRANSITION_ROTATE);
 }
 
 void EvalRegular(in uint2 patchData, in float2 UV, inout float3 WorldPos, inout float3 Normal, float disp, in int4 ptexInfo)
@@ -335,12 +294,8 @@ void EvalRegular(in uint2 patchData, in float2 UV, inout float3 WorldPos, inout 
 		CP[v] = float3(	g_VertexBuffer[vIdx*OSD_NUM_ELEMENTS + 0],
 						g_VertexBuffer[vIdx*OSD_NUM_ELEMENTS + 1],
 						g_VertexBuffer[vIdx*OSD_NUM_ELEMENTS + 2]);
-
 	}
 
-
-	//static float3 WorldPos		=  float3(0.0f, 0.0f, 0.0f);
-	//static float3 Normal 		=  float3(0.0f, 0.0f, 0.0f);
 
 	int rotation = ptexInfo.w;
 	if(rotation == 0) UV.xy = UV.xy;
@@ -382,7 +337,6 @@ float csf(uint n, uint j)
 
 void EvalGregory(in uint3 patchData, inout float2 UV, inout float3 WorldPos, inout float3 Normal, in float disp, in int4 ptexInfo)
 {
-	
 	//static float3 g_CP[4];
 	static float3 g_position[4];
 	static int    g_valence[4];
@@ -411,8 +365,6 @@ void EvalGregory(in uint3 patchData, inout float2 UV, inout float3 WorldPos, ino
 		float3 f[OSD_MAX_VALENCE]; 
 		float3 opos = float3(0,0,0);
 	
-		//float3 r[OSD_MAX_VALENCE]; 
-
 		for (uint vl=0; vl<valence; ++vl) 
 		{
 			uint im=(vl+valence-1)%valence; 
@@ -455,12 +407,8 @@ void EvalGregory(in uint3 patchData, inout float2 UV, inout float3 WorldPos, ino
 			g_r[v][vl] = (neighbor_p-neighbor_m)/3.0f + (diagonal - diagonal_m)/6.0f;
 		}
 		
-		//greg.r = r;
 		opos /= valence;
 		g_position[v] = opos;
-		//position[v] = CP[v];
-		////output.position = float4(opos, 1.0f).xyz;
-		//greg.position = position;
 
 		float3 e;
 		g_e0[v] = float3(0,0,0);
@@ -481,17 +429,12 @@ void EvalGregory(in uint3 patchData, inout float2 UV, inout float3 WorldPos, ino
 		g_Fm[v]=0;		
 	}
 
-	// sync?
-
-
-
-	//  HULL 
 	for(int v2 = 0; v2< 4; ++v2)
 	{
-		uint i = v2;//localID;
-		uint ip = (i+1)%4;			// todo check order of localID above
-		uint im = (i+3)%4;			// todo check order of localID above
-		uint valence = abs(g_valence[v2]); // defined above
+		uint i = v2;	//localID;
+		uint ip = (i+1)%4;	
+		uint im = (i+3)%4;	
+		uint valence = abs(g_valence[v2]); 
 		uint n = valence;
 
 		uint start = uint(g_OsdQuadOffsetBuffer[int(patchData.z + i)]) & 0x00ffu;
@@ -529,12 +472,6 @@ void EvalGregory(in uint3 patchData, inout float2 UV, inout float3 WorldPos, ino
 		//  P0         e0+      e1-         E1
 		//
 		
-		//float3 Ep = patch[i].position + patch[i].e0 * csf(n-3, 2*start) + patch[i].e1*csf(n-3, 2*start + 1);
-		//float3 Em = patch[i].position + patch[i].e0 * csf(n-3, 2*prev ) + patch[i].e1*csf(n-3, 2*prev + 1);
-
-		//float3 Em_ip = patch[ip].position + patch[ip].e0*csf(np-3, 2*prev_p) + patch[ip].e1*csf(np-3, 2*prev_p + 1);
-		//float3 Ep_im = patch[im].position + patch[im].e0*csf(nm-3, 2*start_m) + patch[im].e1*csf(nm-3, 2*start_m + 1);
-
 		float3 Ep = g_position[i] + g_e0[i] * csf(n-3, 2*start) + g_e1[i]*csf(n-3, 2*start + 1);
 		float3 Em = g_position[i] + g_e0[i] * csf(n-3, 2*prev ) + g_e1[i]*csf(n-3, 2*prev + 1);
 
@@ -553,31 +490,9 @@ void EvalGregory(in uint3 patchData, inout float2 UV, inout float3 WorldPos, ino
 		g_Fp[i] = Fp;
 		g_Fm[i] = Fm;
 
-
-		//int patchLevel = GetPatchLevel(primitiveID);
-		//output.patchCoord = float4(0, 0,
-		//                           patchLevel+0.5f,
-		//                           primitiveID+PrimitiveIdBase+0.5f);
-
 	}
 
-
-	///////////////////////////////////////////////////////////////////////////////
-	// eval
-
-
-	// domain
-	//float u = uv.x,
-	//      v = uv.y;
-
 	float2 uv = UV;
-
-	//// todo check order
-	//if(i == 0) { uv = float2(0,0);}
-	//if(i == 1) { uv = float2(1,0);}
-	//if(i == 2) { uv = float2(1,1);}
-	//if(i == 3) { uv = float2(0,1);}
-	
 
     float3 p[20];
 
@@ -632,11 +547,9 @@ void EvalGregory(in uint3 patchData, inout float2 UV, inout float3 WorldPos, ino
     q[14] = p[11];
     q[15] = p[10];
 
-    //float3 WorldPos  = float3(0, 0, 0);
     float3 Tangent   = float3(0, 0, 0);
     float3 BiTangent = float3(0, 0, 0);
 
-	// henry: new dx compiler wont compile without static here
     static float B[4], D[4];
     static float3 BUCP[4], DUCP[4];
 
@@ -663,37 +576,9 @@ void EvalGregory(in uint3 patchData, inout float2 UV, inout float3 WorldPos, ino
         Tangent   += B[j] * DUCP[j];
         BiTangent += D[j] * BUCP[j];
     }
-    //int level = int(patch[0].ptexInfo.z);
-    //BiTangent *= 3 * level;
-    //Tangent *= 3 * level;
-
-    //BiTangent = mul(ModelViewMatrix, float4(BiTangent, 0)).xyz;
-    //Tangent = mul(ModelViewMatrix, float4(Tangent, 0)).xyz;
-
-    //float3 normal = normalize(cross(BiTangent, Tangent));
 
 	Normal = normalize(cross(BiTangent, Tangent));
 	WorldPos += disp * Normal;
-    //position = WorldPos;
-	//controlPointsGregory[threadIdx.x][localID] = position;
-    //output.normal = normal;
-    //output.tangent = BiTangent;
-    //output.bitangent = Tangent;
-
-    //output.patchCoord = patch[0].patchCoord;
-    //output.patchCoord.xy = float2(v, u);
-
-    //OSD_COMPUTE_PTEX_COORD_DOMAIN_SHADER;
-
-    //OSD_DISPLACEMENT_CALLBACK;
-
-//#if USE_SHADOW	
-//	float4 posWorld = mul(mInverseView, float4(output.position.xyz, 1));
-//	output.vTexShadow = mul(g_lightViewMatrix, posWorld); // transform to light space
-//#endif
-
-    //output.positionOut = mul(ProjectionMatrix,
-    //                         float4(output.position.xyz, 1.0f));
 }
 
 struct SGregory
@@ -717,17 +602,15 @@ void LoadGregorySharedMem(in uint3 patchData, int idx)
 {
 
 	//load to shared mem
-	//for(int v = 0; v < 4; ++v)
 	{
 		int v = idx;
 		SGregory greg;
-		//int vIdx = g_IndexBuffer[g_IndexStart + g_NumIndicesPerPatch * localPatchID + localID];
 		int vIdx = g_IndexBuffer[patchData.y + v];
 		float3 pos = float3(	g_VertexBuffer[vIdx*OSD_NUM_ELEMENTS + 0],
 									g_VertexBuffer[vIdx*OSD_NUM_ELEMENTS + 1],
 									g_VertexBuffer[vIdx*OSD_NUM_ELEMENTS + 2]);
 		    
-		int ivalence = g_OsdValenceBuffer[int(vIdx * (2 * OSD_MAX_VALENCE + 1))]; // checkme is SV_VertexID == vertex buffer index?
+		int ivalence = g_OsdValenceBuffer[int(vIdx * (2 * OSD_MAX_VALENCE + 1))]; 
 		greg.valence = ivalence;
 		uint valence = uint(abs(ivalence));
 
@@ -803,17 +686,13 @@ void LoadGregorySharedMem(in uint3 patchData, int idx)
 		dgreg[v] = greg;
 	}
 
-	// sync?
-
 	GroupMemoryBarrierWithGroupSync();
-	
-	//  HULL 
-	//for(int v2 = 0; v2< 4; ++v2)
+		
 	{
 		int v2 = idx;
-		uint i = v2;//localID;
-		uint ip = (i+1)%4;			// todo check order of localID above
-		uint im = (i+3)%4;			// todo check order of localID above
+		uint i = v2;
+		uint ip = (i+1)%4;
+		uint im = (i+3)%4;
 		uint valence = abs(dgreg[i].valence); // defined above
 		uint n = valence;
 
@@ -894,21 +773,20 @@ float3 EvalGregorySharedMem(in float2 UV, in float disp, in int level, out float
     float d22 = U+V;        if(d22==0.0f) d22 = 1.0f;
     q[10] = (U*dgreg[2].Fp/*p[13]*/ + V*dgreg[2].Fm/*p[14]*/)/d22;
 
-    q[ 0] = dgreg[0].position;//p[0];
-    q[ 1] = dgreg[0].Ep;//p[1];
-    q[ 2] = dgreg[1].Em;//p[7];
-    q[ 3] = dgreg[1].position;//p[5];
-    q[ 4] = dgreg[0].Em;//p[2];
-    q[ 7] = dgreg[1].Ep;//p[6];
-    q[ 8] = dgreg[3].Ep;//p[16];
-    q[11] = dgreg[2].Em;//p[12];
-    q[12] = dgreg[3].position;//p[15];
-    q[13] = dgreg[3].Em;//p[17];
-    q[14] = dgreg[2].Ep;//p[11];
-    q[15] = dgreg[2].position;//p[10];
+    q[ 0] = dgreg[0].position;
+    q[ 1] = dgreg[0].Ep;
+    q[ 2] = dgreg[1].Em;
+    q[ 3] = dgreg[1].position;
+    q[ 4] = dgreg[0].Em;
+    q[ 7] = dgreg[1].Ep;
+    q[ 8] = dgreg[3].Ep;
+    q[11] = dgreg[2].Em;
+    q[12] = dgreg[3].position;
+    q[13] = dgreg[3].Em;
+    q[14] = dgreg[2].Ep;
+    q[15] = dgreg[2].position;
 	    
-	
-	// henry: new dx compiler wont compile without static here
+		
     static float B[4], D[4];
     static float3 BUCP[4], DUCP[4];
 
@@ -921,8 +799,7 @@ float3 EvalGregorySharedMem(in float2 UV, in float disp, in int level, out float
         [unroll(4)]
         for (uint j=0; j<4; ++j) {
             // reverse face front
-            //float3 A = q[i + 4*j];
-			float3 A = q[i + 4*j];
+    		float3 A = q[i + 4*j];
 
             BUCP[i] += A * B[j];
             DUCP[i] += A * D[j];
@@ -942,9 +819,6 @@ float3 EvalGregorySharedMem(in float2 UV, in float disp, in int level, out float
         BiTangent += D[k] * BUCP[k];
     }
 
-    //int level = int(patch[0].ptexInfo.z);
-    //BiTangent *= 3 * level;
-    //Tangent *= 3 * level;
 	BiTangent *= 3 * level;
     Tangent *= 3 * level;
 
@@ -959,107 +833,6 @@ Buffer<uint>			g_bufVoxels				: register(t10);
 #include "VoxelDDA.hlsl"
 #include "Material.h.hlsl"
 
-//void EvalDisplacementFromVoxel(in float3 WorldPos, in float3 Normal, in float disp, in uint2 ucoord, PtexPacking ppack, in float2 UV, in float3 CP[16] )
-//{
-//	float3 rayOrigin = mul((g_matModelToVoxel), float4(WorldPos,1.0)).xyz;
-//	float3 rayDir = normalize(mul(((float3x3)(g_matModelToVoxel)), float3(-Normal.xyz)).xyz);//
-//	static float dist = 0;
-//	
-//#ifdef WITH_MULTISAMPLING
-//	float3 tmp = rayDir;
-//	int which = 0;
-//	float val = tmp.x;
-//	if(tmp.y > val) {val = tmp.y; which  = 1;};
-//	if(tmp.z > val) {which  = 2;};
-//
-//	if(which == 0) tmp.x = 0;
-//	if(which == 1) tmp.y = 0;
-//	if(which == 2) tmp.z = 0;
-//	
-//
-//	float3 t = cross(rayDir, normalize(tmp));
-//	float3 b = cross(t, rayDir);
-//	float3 rayO = rayOrigin;	
-//	float sumDist = 0;
-//	for(int s = 0; s < 5; ++s)
-//	{
-//		if(s == 1) {rayOrigin = rayO+1.5*b;}
-//		if(s == 2) {rayOrigin = rayO-1.5*b;}
-//		if(s == 3) {rayOrigin = rayO+1.5*t;}
-//		if(s == 4) {rayOrigin = rayO-1.5*t;}
-//	
-//		float2 uvPos = UV;
-//		// variant 2
-//		if(s== 1)	uvPos.x += 1.f/256;
-//		if(s== 2)	uvPos.x -= 1.f/256;
-//		if(s== 3)	uvPos.y += 1.f/256;
-//		if(s== 4)	uvPos.y -= 1.f/256;
-//		WorldPos		=  float3(0.0f, 0.0f, 0.0f);
-//		Eval(saturate(uvPos), WorldPos, Normal, CP); 
-//		//EvalRegular(clamp(uvPos,0,1), WorldPos, Normal, CP); 
-//		WorldPos += disp * Normal;
-//		rayOrigin = mul((g_matModelToVoxel), float4(WorldPos,1.0)).xyz;
-//		rayDir = normalize(mul(((float3x3)(g_matModelToVoxel)), float3(-Normal.xyz)).xyz);//
-//
-//	
-//	//is only false if outside the box
-//		if (VoxelDDA(rayOrigin, rayDir, dist) == false) 
-//		{
-//			dist = 0;
-//			return;
-//		} 
-//		else // we have an intersection depth
-//		{
-//			float3 p = rayDir * dist;
-//			p = mul((float3x3)(((g_matNormal))), p);
-//			dist = disp - length(p);
-//		}
-//		sumDist += dist;
-//	}
-//	if(dist == 0) return;
-//	dist = sumDist * 0.2;	
-//
-//#else
-//	//is only false if outside the box
-//	if (VoxelDDA(rayOrigin, rayDir, dist) == false) 
-//	{
-//		//dist = MINF;
-//		return;
-//	} 
-//	else // we have an intersection depth
-//	{
-//		if (dist == 0.0f)	
-//		{
-//			//dist = MINF;
-//			return;
-//		}
-//		float3 p = rayDir * dist;
-//		p = mul((float3x3)(((g_matNormal))), p);
-//		dist = disp - length(p);
-//
-//		//if (dist == 0.0f) {
-//		//	dist = d - length(p);
-//		//} else {
-//		//	dist = d - length(p);
-//		//	dist = solveXi(dist, uCoords.x, uCoords.y);
-//		//}
-//	}
-//#endif
-//
-//
-//	float omega = g_Smoothness;//0.25;//0.25f;
-//#ifdef WITH_CONSTRAINTS
-//	// constraints uav is bound, but we cannot reuse slot u0 due to compiler
-//	// checkme doeas not work with srv
-//	g_displacementUAV[int3(ucoord.x, ucoord.y, ppack.page)] =  lerp(g_displacementUAV[int3(ucoord.x, ucoord.y, ppack.page)], dist, omega);	
-//#else
-//	g_displacementUAV[int3(ucoord.x, ucoord.y, ppack.page)] =  lerp(g_displacementUAV[int3(ucoord.x, ucoord.y, ppack.page)], dist, omega);
-//#endif
-//
-//	// todo memory for constraints 
-//	//g_ConstraintsUAV[int3(ucoord.x, ucoord.y, ppack.page)] = lerp(g_displacementSRV[int3(ucoord.x, ucoord.y, ppack.page)], dist, omega);
-//
-//}
 #endif
 
 
@@ -1140,8 +913,7 @@ void TileEditCS(
 
 		if(ts < 1.0) return; // skip patchLevel that do not affect tile texels
 		tileSize /= splitter;
-		//tileSize = ceil(ts);
-		
+				
 		if(ts<1.f)
 			tileSize = 1;
 	}
@@ -1164,12 +936,12 @@ void TileEditCS(
 	float2 UV = 0.f;	// uv coord in patch space 0..1 spanned by updated tile size
 	if(tileSize > 1)
 	{		
-		UV = 1.0f / (tileSize) * (idx.xy+0.5); // checkme was above line
+		UV = 1.0f / (tileSize) * (idx.xy+0.5);
 	}
 
 	
 	// get displacement
-	float4 patchCoord = float4(0, 0, patchLevel, 0);  // (patch u,v, subd level, patchID)
+	float4 patchCoord = float4(0, 0, patchLevel, 0);  
 
 	int4 ptexInfo; //(ptex u,v, ptex level, ptex rotation)
 	GetPatchInfo(UV,patchData.x, patchCoord, ptexInfo);
@@ -1189,32 +961,25 @@ void TileEditCS(
 	PtexPacking ppack = getPtexPacking(g_TileInfo, faceID);
 #endif
 
-	if(ppack.page == -1)	return ;		// early exit if tile data is not allocated
+	if(ppack.page == -1)	// early exit if tile data is not allocated
+		return ;	
 
 	float2 coords = float2(patchCoord.x * ppack.tileSize + ppack.uOffset,
 		patchCoord.y * ppack.tileSize + ppack.vOffset);
 	
 
-	//coords -= 0.5;
 	uint2 ucoord = uint2(coords);    
-	// nearest
 	float disp = 0;
 	disp = g_displacementUAV[int3(ucoord.x, ucoord.y, ppack.page)];
-	//float disp = g_displacementUAV[int3(coords.x, coords.y, ppack.page)];
 
-
-//	// after early exits
-//	// load control points // to shared memory
-	
-	
+	// load control points // to shared memory
 	
     float3 WorldPos		=  float3(0.0f, 0.0f, 0.0f);
 	float3 Normal;
 
 
 #ifdef REGULAR    
-
-	// HENRY: not sure if we need that rotation
+		
 	int rotation = ptexInfo.w;
 	if(rotation == 0) UV.xy = UV.xy;
 	if(rotation == 1) UV.xy = float2(UV.y, 1.0-UV.x);
@@ -1242,11 +1007,6 @@ void TileEditCS(
 	
 	WorldPos += disp * Normal;
 
-    //WriteColor(Normal*0.5+0.5,faceID, patchCoord, patchLevel);
-    //WriteColor(WorldPos*0.1,faceID, patchCoord, patchLevel);
-
-
-    //return;
 #endif
 #ifdef GREGORY
 	
@@ -1256,10 +1016,6 @@ void TileEditCS(
 	    EvalGregory(patchData, UV.yx, WorldPos, Normal, disp, ptexInfo);
     #endif
 
-    //WriteColor(WorldPos*0.1,faceID, patchCoord, patchLevel);
-	//WriteColor(Normal*0.5+0.5,faceID, patchCoord, patchLevel);
-	////WriteColor(float3(patchCoord.xy,0),faceID, patchCoord, patchLevel);
-	//return;
 #endif
 
 #if defined(USE_COLOR_BRUSH) || defined (USE_SCULPT_BRUSH)
@@ -1267,7 +1023,6 @@ void TileEditCS(
 #endif
 
 #ifdef USE_VOXELDEFORM
-	//EvalDisplacementFromVoxel(WorldPos, Normal, disp, ucoord, ppack, UV);
 
 	float3 rayOrigin = mul((g_matModelToVoxel), float4(WorldPos,1.0)).xyz;
 	float3 rayDir = normalize(mul(((float3x3)(g_matModelToVoxel)), float3(-Normal.xyz)).xyz);//
@@ -1322,13 +1077,13 @@ void TileEditCS(
 		rayDir = normalize(mul(((float3x3)(g_matModelToVoxel)), float3(-Normal.xyz)).xyz);//
 
 	
-	//is only false if outside the box
+		// check if outside the box
 		if (VoxelDDA(rayOrigin, rayDir, dist) == false) 
 		{
 			dist = 0;
 			return;
 		} 
-		else // we have an intersection depth
+		else // we have and intersection
 		{
 			float3 p = rayDir * dist;
 			p = mul((float3x3)(((g_matNormal))), p);
@@ -1343,48 +1098,33 @@ void TileEditCS(
 	//is only false if outside the box
 	if (VoxelDDA(rayOrigin, rayDir, dist) == false) 
 	{
-		//dist = MINF;
 		return;
 	} 
 	else // we have an intersection depth
 	{
 		if (dist == 0.0f)	
 		{
-			//dist = MINF;
 			return;
 		}
 		float3 p = rayDir * dist;
 		p = mul((float3x3)(((g_matNormal))), p);
 		dist = disp - length(p);
-
-		//if (dist == 0.0f) {
-		//	dist = d - length(p);
-		//} else {
-		//	dist = d - length(p);
-		//	dist = solveXi(dist, uCoords.x, uCoords.y);
-		//}
 	}
 #endif
 
 
-	float omega = 0.25; //g_Smoothness;//0.25;//0.25f;
+	float omega = g_Smoothness;
 #ifdef WITH_CONSTRAINTS
 	// constraints uav is bound, but we cannot reuse slot u0 due to compiler
-	// checkme doeas not work with srv
 	float dispOut = lerp(g_displacementUAV[int3(ucoord.x, ucoord.y, ppack.page)], dist, omega);
-	//int val = asint(dispOut);
-	//val |= (1u);	
-	//dispOut = asfloat(val);
-	g_displacementUAV[int3(ucoord.x, ucoord.y, ppack.page)] = dispOut;// val;// lerp(g_displacementUAV[int3(ucoord.x, ucoord.y, ppack.page)], dist, omega);	
+	g_displacementUAV[int3(ucoord.x, ucoord.y, ppack.page)] = dispOut;
 #else
 	float outDisp = lerp(g_displacementUAV[int3(ucoord.x, ucoord.y, ppack.page)], dist, omega);
-	g_displacementUAV[int3(ucoord.x, ucoord.y, ppack.page)] = outDisp;//  lerp(g_displacementUAV[int3(ucoord.x, ucoord.y, ppack.page)], dist, omega);
+	g_displacementUAV[int3(ucoord.x, ucoord.y, ppack.page)] = outDisp;
 	uint oldVal = 0;
 	InterlockedMax(g_maxPatchDisplacement[patchData.x], asuint(abs(outDisp)), oldVal);	
 #endif
 
-	// todo memory for constraints 
-	//g_ConstraintsUAV[int3(ucoord.x, ucoord.y, ppack.page)] = lerp(g_displacementSRV[int3(ucoord.x, ucoord.y, ppack.page)], dist, omega);
 #endif
 
 
@@ -1418,28 +1158,13 @@ void GetPatchInfoTransfer(float2 UV, uint patchDataX, inout float4 patchCoord, i
 
 	float2 uv = patchCoord.xy;
 	int2 p = ptexInfo.xy;                                  
-    //int lv = ptexInfo.z;                                   
     int rot = ptexInfo.w;                                  
 
-	// TODO ENABLE
-    //uv.xy = float(rot==0)*uv.xy                                     
-    //        + float(rot==1)*float2(1.0-uv.y, uv.x)                      
-    //        + float(rot==2)*float2(1.0-uv.x, 1.0-uv.y)                  
-    //        + float(rot==3)*float2(uv.y, 1.0-uv.x);                  
-	
-	//////!!!!!!!!!!!!!!!!!!!!!!! 
-	// THIS IS CORRECT FOR UV transfer detail
-	// CHECKME do we need that above in standard apply brush?
-	//uv.xy = float2(1.0-uv.y, uv.x);
 	if(rotation == 0) uv.xy = uv.xy;
 	if(rotation == 1) uv.xy = float2(1.0-uv.y, uv.x);
 	if(rotation == 2) uv.xy = float2(1.0-uv.x, 1.0-uv.y);
 	if(rotation == 3) uv.xy = float2(uv.y, 1.0-uv.x); 
 
-	//uv.xy = float2(1.0-uv.x, 1.0-uv.y);
-	// renable again
-	// what is wrong with rotation?
-	//patchCoord.xy = (uv + float2(p.xy)/lv); 
     patchCoord.xy = (uv * float2(1.0,1.0)/lv) + float2(p.x, p.y)/lv; 
 	patchCoord.xy = (uv/lv) + p/(float)lv; 
 }
@@ -1455,7 +1180,7 @@ void DisplacementTransferOSDCS(
 	uint3 threadIdx : SV_GroupThreadID,
 	uint  GI		: SV_GroupIndex )
 {
-		//uint localPatchID = blockIdx.x;
+
 #ifdef REGULAR
 	uint2 patchData = g_patchDataRegular[blockIdx.x];
 #else
@@ -1469,7 +1194,6 @@ void DisplacementTransferOSDCS(
 	{
 		float splitter = (0x1 << (patchLevel));		
 		float ts =  (float)tileSize / splitter;
-		//if(ts < 0.5) return; // skip patchLevel that do not affect tile texels
 		if(ts < 1) return; // skip patchLevel that do not affect tile texels
 		tileSize /= splitter;
 	}
@@ -1486,7 +1210,6 @@ void DisplacementTransferOSDCS(
 	float2 UV = 0.f;	// uv coord in patch space 0..1 spanned by updated tile size
 	if(tileSize > 1)
 	{
-		//UV = 1.0f / (tileSize) * (idx.xy); // checkme tilesize-1 
 		UV = (idx.xy+0.5) / float(tileSize); // checkme was above line
 	}
 
@@ -1499,66 +1222,8 @@ void DisplacementTransferOSDCS(
 	int faceID = int(patchCoord.w);
 	if (!g_ptexFaceVisibleSRV[faceID]) // Early exit - visibility
 		return;
-	//GroupMemoryBarrierWithGroupSync();
 
 
-//
-//	/////////////////////////////////
-//	//uint localPatchID = blockIdx.x;
-//#ifdef REGULAR
-//	uint2 patchData = g_patchDataRegular[blockIdx.x];
-//#else
-//	uint3 patchData = g_patchDataGregory[blockIdx.x];
-//#endif
-//	int patchLevel = GetLevel(patchData.x);
-//
-//	uint tileSize = (uint) TILE_SIZE;
-//
-//	if(patchLevel > 0)
-//	{
-//		float splitter = (0x1 << (patchLevel));		
-//		float ts =  (float)tileSize / splitter;
-//		//if(ts < 0.5) return; // skip patchLevel that do not affect tile texels
-//		if(ts < 1) return; // skip patchLevel that do not affect tile texels
-//				
-//		tileSize /= splitter;
-//		if(ts<1.f)
-//			tileSize = 1;
-//	}
-//	
-//
-//	uint2 idx = threadIdx.xy;	// index in tile
-//	if (NUM_BLOCKS > 1)
-//		idx += DISPLACEMENT_DISPATCH_TILE_SIZE * uint2(blockIdx.y % NUM_BLOCKS, blockIdx.y / NUM_BLOCKS);
-//
-//	//if(idx.x >= tileSize || idx.y >= tileSize)
-//	//	return;
-//	
-//	float2 UV = 0.f;	// uv coord in patch space 0..1 spanned by updated tile size
-//	if(tileSize > 1)
-//	{
-//		UV = 1.0f / (tileSize) * (idx.xy+0.5); // checkme was above line
-//	}
-//
-//	
-//	// get displacement
-//	float4 patchCoord = float4(0, 0, patchLevel, 0);  // (patch u,v, subd level, patchID)
-//	//float4 patchCoord = float4(0, 0, 1, 0);  // (patch u,v, subd level, patchID)
-//
-//	int4 ptexInfo; //(ptex u,v, ptex level, ptex rotation)
-//	GetPatchInfoTransfer(UV,patchData.x, patchCoord, ptexInfo);
-//	int faceID = int(patchCoord.w);
-//	if (!g_ptexFaceVisibleSRV[faceID]) // Early exit - visibility
-//		return;
-
-
-	//GroupMemoryBarrierWithGroupSync();
-
-//#define _DEBUG_COLOR 	
-//#ifdef DEBUG_COLOR
-//	DebugColor(faceID, patchCoord, patchLevel);
-//	return;	
-//#endif
 
 	#define OSD_FVAR_WIDTH 2
 	uint fvarOffset = 0;
@@ -1569,24 +1234,11 @@ void DisplacementTransferOSDCS(
 		int index =  (primOffset+i)*OSD_FVAR_WIDTH+fvarOffset;
 		uvTex[i] = float2( g_atlasUV[index],  g_atlasUV[index+1]);
 	}
-	// regular
 
-
-	//if( ptexInfo.w == 0) UV.xy = UV.xy;
-	//if( ptexInfo.w == 1) UV.xy = float2(1.0-UV.y, UV.x);
-	//if( ptexInfo.w == 2) UV.xy = float2(1.0-UV.x, 1.0-UV.y);
-	//if( ptexInfo.w == 3) UV.xy = float2(UV.y, 1.0-UV.x); 
-	
-//#if REGULAR
 	float2 uvCoordTex = lerp(lerp(uvTex[0], uvTex[1], UV.x)	,	
 							 lerp(uvTex[3], uvTex[2], UV.x)
 							,UV.y);
-//#else
-//	float2 uvCoordTex = lerp(lerp(uvTex[0], uvTex[1], UV.y)	,	
-//							 lerp(uvTex[3], uvTex[2], UV.y)
-//							,UV.x);
-//#endif
-	// flip uv for frog
+
 	uvCoordTex = float2(uvCoordTex.x, 1-uvCoordTex.y);
 	float disp = g_txDisp.SampleLevel(g_sampler,  uvCoordTex, 0, 0);
 	
@@ -1601,14 +1253,7 @@ void DisplacementTransferOSDCS(
 
 	uint2 ucoord = uint2(coords);
 	
-	//disp = g_displacementUAV[int3(ucoord.x, ucoord.y, ppack.page)];
-	//float disp = g_displacementUAV[int3(coords.x, coords.y, ppack.page)];
 	g_displacementUAV[int3(ucoord.x, ucoord.y, ppack.page)] = disp * 0.25;//UV.y/128.0;
-//#ifdef REGULAR
-//	WriteColor(float3(uvCoordTex,0),faceID , patchCoord, patchLevel);
-//#else
-//	WriteColor(float3(uvCoordTex,0),faceID , patchCoord, patchLevel);
-//#endif
 }
 
 #endif	
@@ -1716,30 +1361,26 @@ float filterGauss(uint i, uint j, in uint page, in Texture2DArray<float> input) 
 	//return avg /= weight;
 }
 
-float getSmoothedValueQuadratic(uint i, uint j, in uint page) {
+float getSmoothedValueQuadratic(uint i, uint j, in uint page) 
+{
 	float actual = g_constraintsSRV[uint3(i,j,page)];
-	//if(checkFlagSet(actual) == false) return actual; 
 	float middle = evalDispMiddle(i,j, page, g_constraintsSRV);
-	//float middle = evalDispMiddleUAV(i,j, page, g_displacementUAV);
-	//return middle;
 	return min(actual, middle);
 }
 
 
-float getSmoothedValueGauss(uint i, uint j, in uint page) {
+float getSmoothedValueGauss(uint i, uint j, in uint page) 
+{
 	float actual = g_constraintsSRV[uint3(i,j,page)];
-	//if(checkFlagSet(actual) == false) return actual; 
 	float middle =  filterGauss(i,j, page, g_constraintsSRV);
-	//return middle;
 	return min(actual, middle);
-	//return lerp(actual, middle,0.5);
 }
 
-float getSmoothedValueLinear(uint i, uint j, uint page) {
+float getSmoothedValueLinear(uint i, uint j, uint page) 
+{
 	float actual = g_constraintsSRV[uint3(i,j,page)];
-	//if(checkFlagSet(actual) == false) return actual; 
-	
 	return actual;
+
 	float middle = boxFilter(i,j,page, g_constraintsSRV);
 	return min(actual, middle);
 }
@@ -1753,7 +1394,6 @@ void ApplyConstraintsOSDCulledCS(
 	uint  GI		: SV_GroupIndex )
 {
 
-	//uint localPatchID = blockIdx.x;
 #ifdef REGULAR
 	uint2 patchData = g_patchDataRegular[blockIdx.x];
 #else
@@ -1809,16 +1449,7 @@ void ApplyConstraintsOSDCulledCS(
 
 	//coords -= 0.5;
 	uint2 ucoord = uint2(coords);    
-	// nearest
-	//float disp = 0;
-	//float disp = g_constraintsSRV[int3(ucoord.x, ucoord.y, ppack.page)];
-	//float disp = getSmoothedValueLinear(ucoord.x, ucoord.y, ppack.page);
-	//float disp = getSmoothedValueGauss(ucoord.x, ucoord.y, ppack.page);
 	float disp = getSmoothedValueQuadratic(ucoord.x, ucoord.y, ppack.page);
-	
-
-	//disp = abs(disp-g_constraintsSRV[int3(ucoord.x, ucoord.y, ppack.page)]);
-	//disp  = g_displacementUAV[int3(ucoord.x, ucoord.y, ppack.page)] - disp;
 	g_displacementUAV[int3(ucoord.x, ucoord.y, ppack.page)] = disp;
 }
 #endif
