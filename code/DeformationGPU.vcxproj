@@ -199,7 +199,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>Create</PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -247,6 +247,7 @@
     <ClCompile Include="src\scene\Scene.cpp" />
     <ClCompile Include="src\stdafx.cpp" />
     <ClCompile Include="src\TileOverlapUpdater.cpp" />
+    <ClCompile Include="src\utils\DXPicking.cpp" />
     <ClCompile Include="src\utils\FrameProfiler.cpp" />
     <ClCompile Include="src\utils\Frustum.cpp" />
     <ClCompile Include="src\utils\MathHelpers.cpp" />
@@ -283,6 +284,7 @@
     <ClInclude Include="src\TileOverlapUpdater.h" />
     <ClInclude Include="src\utils\CoNTables.h" />
     <ClInclude Include="src\utils\DbgNew.h" />
+    <ClInclude Include="src\utils\DXPicking.h" />
     <ClInclude Include="src\utils\FrameProfiler.h" />
     <ClInclude Include="src\utils\Frustum.h" />
     <ClInclude Include="src\utils\MathHelpers.h" />

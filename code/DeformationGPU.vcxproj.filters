@@ -163,6 +163,9 @@
     <ClCompile Include="src\TileEdit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\utils\DXPicking.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\dynamics\AnimationGroup.h">
@@ -269,6 +272,9 @@
     </ClInclude>
     <ClInclude Include="src\TileEdit.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\DXPicking.h">
+      <Filter>Header Files\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

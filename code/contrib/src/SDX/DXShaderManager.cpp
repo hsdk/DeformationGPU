@@ -732,7 +732,9 @@ bool WatchedFile::CheckIsModified()
 	auto lastWrite = m_lastWrite.ftLastWriteTime;
 	
 	HANDLE hFind = FindFirstFile(m_fileName.c_str(), &m_lastWrite);
-	return CompareFileTime(&m_lastWrite.ftLastWriteTime,&lastWrite) > 0;	
+	bool result =  CompareFileTime(&m_lastWrite.ftLastWriteTime,&lastWrite) > 0;	
+	FindClose(hFind);
+	return result;
 }
 
 DXShaderSourceConfig::~DXShaderSourceConfig()
