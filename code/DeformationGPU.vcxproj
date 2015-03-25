@@ -247,7 +247,6 @@
     <ClCompile Include="src\scene\Scene.cpp" />
     <ClCompile Include="src\stdafx.cpp" />
     <ClCompile Include="src\TileOverlapUpdater.cpp" />
-    <ClCompile Include="src\utils\DXPicking.cpp" />
     <ClCompile Include="src\utils\FrameProfiler.cpp" />
     <ClCompile Include="src\utils\Frustum.cpp" />
     <ClCompile Include="src\utils\MathHelpers.cpp" />
